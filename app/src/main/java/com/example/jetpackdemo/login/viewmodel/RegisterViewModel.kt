@@ -10,7 +10,7 @@ import com.example.jetpackdemo.data.model.Register
 import com.example.jetpackdemo.data.repository.AppRepository
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val repository: AppRepository) : ViewModel(){
+class RegisterViewModel(private val repository: AppRepository) : ViewModel() {
     var name = MutableLiveData("")
     var pwd = MutableLiveData("")
     var repwd = MutableLiveData("")
@@ -37,21 +37,13 @@ class RegisterViewModel(private val repository: AppRepository) : ViewModel(){
     fun onRepwdChanged(s: CharSequence) {
         repwd.value = s.toString()
     }
-//    fun login() {
-//        if (name.value.equals("zzq") && pwd.value.equals("123456")) {
-//            Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show()
-//            val intent = Intent(context, MainActivity::class.java)
-//            intent.flags = FLAG_ACTIVITY_NEW_TASK
-//            context.startActivity(intent)
-//        } else {
-//            Toast.makeText(context, "登录失败", Toast.LENGTH_SHORT).show()
-//        }
-//    }
 
-    fun register(){
-        Log.d("zzq","register")
+    fun register() {
+        Log.d("zzq", "register")
         viewModelScope.launch {
-            var registerData:Register = repository.register(name, pwd, repwd)
+            var registerData: Register =
+                repository.register(name.value!!, pwd.value!!, repwd.value!!)
+            Log.d("zzq", "registerData=" + registerData.toString())
             if (registerData.errorCode == 0) {
                 Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show()
             } else {

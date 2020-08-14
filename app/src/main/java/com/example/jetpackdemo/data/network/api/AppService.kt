@@ -10,9 +10,10 @@ import retrofit2.http.POST
 interface AppService {
     @POST("user/register")
     @FormUrlEncoded
-    fun register(@Field("username") username: MutableLiveData<String>,
-                 @Field("password") password: MutableLiveData<String>,
-                 @Field("repassword") rePassword: MutableLiveData<String>
+    fun register(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("repassword") rePassword: String
     ): Call<Register>
 
 }
