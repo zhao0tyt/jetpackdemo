@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.jetpackdemo.login.viewmodel.RegisterViewModel"
+            type="com.example.jetpackdemo.ui.login.viewmodel.RegisterViewModel"
             />
 
         <variable
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".login.view.RegisterFragment">
+        tools:context=".ui.login.view.RegisterFragment">
 
         <TextView
             android:id="@+id/txt_cancel"

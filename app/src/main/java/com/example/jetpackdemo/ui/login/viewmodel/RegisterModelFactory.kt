@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.viewmodel
+package com.example.jetpackdemo.ui.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,6 +9,8 @@ class RegisterModelFactory(private val repository: AppRepository) :
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return RegisterViewModel(repository) as T
+        return RegisterViewModel(
+            repository
+        ) as T
     }
 }

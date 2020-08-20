@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".me.MeFragment">
+    tools:context=".ui.me.MeFragment">
 
     <TextView
         android:layout_marginTop="15dp"

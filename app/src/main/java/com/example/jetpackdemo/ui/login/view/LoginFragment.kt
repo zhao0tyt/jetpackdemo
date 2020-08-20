@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.view
+package com.example.jetpackdemo.ui.login.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.jetpackdemo.databinding.FragmentLoginBinding
-import com.example.jetpackdemo.login.viewmodel.LoginViewModel
+import com.example.jetpackdemo.ui.login.viewmodel.LoginViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -16,7 +16,7 @@ import com.example.jetpackdemo.login.viewmodel.LoginViewModel
  */
 class LoginFragment : Fragment() {
 
-    private val loginModel:LoginViewModel by viewModels()
+    private val loginModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

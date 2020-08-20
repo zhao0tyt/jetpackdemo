@@ -1,9 +1,10 @@
-package com.example.jetpackdemo
+package com.example.jetpackdemo.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.jetpackdemo.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.view
+package com.example.jetpackdemo.ui.login.view
 
 import android.os.Bundle
 import android.util.Log

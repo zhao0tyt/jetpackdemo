@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.view
+package com.example.jetpackdemo.ui.login.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.jetpackdemo.databinding.FragmentRegisterBinding
-import com.example.jetpackdemo.login.viewmodel.RegisterViewModel
+import com.example.jetpackdemo.ui.login.viewmodel.RegisterViewModel
 import com.example.jetpackdemo.util.InjectorUtil
 import kotlinx.android.synthetic.main.fragment_login.txt_cancel
 

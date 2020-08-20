@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.market
+package com.example.jetpackdemo.ui.me
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,16 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.jetpackdemo.R
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MarketFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MarketFragment : Fragment() {
+class MeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -24,7 +18,7 @@ class MarketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_market, container, false)
+        return inflater.inflate(R.layout.fragment_me, container, false)
     }
 
 }

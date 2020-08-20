@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.viewmodel
+package com.example.jetpackdemo.ui.login.viewmodel
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jetpackdemo.BaseApplication
-import com.example.jetpackdemo.MainActivity
+import com.example.jetpackdemo.ui.MainActivity
 
 class LoginViewModel : ViewModel(){
     var name = MutableLiveData("")

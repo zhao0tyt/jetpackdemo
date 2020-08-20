@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.viewmodel
+package com.example.jetpackdemo.ui.login.viewmodel
 
 import android.util.Log
 import android.widget.Toast

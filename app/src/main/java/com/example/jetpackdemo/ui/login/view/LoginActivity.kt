@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.login.view
+package com.example.jetpackdemo.ui.login.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
