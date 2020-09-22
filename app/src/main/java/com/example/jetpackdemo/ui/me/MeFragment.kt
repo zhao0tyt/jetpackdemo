@@ -1,24 +1,18 @@
 package com.example.jetpackdemo.ui.me
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.jetpackdemo.R
+import com.example.jetpackdemo.ui.base.BaseFragment
+import com.example.jetpackdemo.databinding.FragmentMeBinding
 
-class MeFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>() {
+    override fun layoutId(): Int {
+        return R.layout.fragment_me
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_me, container, false)
+    override fun initView(savedInstanceState: Bundle?) {
+
     }
+
 
 }

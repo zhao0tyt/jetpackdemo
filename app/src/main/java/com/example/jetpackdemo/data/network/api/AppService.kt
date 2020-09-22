@@ -16,4 +16,6 @@ interface AppService {
         @Field("repassword") rePassword: String
     ): Call<Register>
 
+
 }
+

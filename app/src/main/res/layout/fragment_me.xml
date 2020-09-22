@@ -1,334 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.me.MeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_marginTop="15dp"
-        android:id="@+id/textView"
+    <data>
+        <variable
+            name="vm"
+            type="com.example.jetpackdemo.ui.me.MeViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/me_swipe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="我"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"/>
+        android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorSpace" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.me.MeFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        >
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:src="@drawable/menu_me" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="我"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:text="登录/注册"
-        android:textColor="@android:color/black"
-        android:textSize="18sp" />
-    </LinearLayout>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorSpace" />
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/colorSpace" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
 
-    <!--积分-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-    <ImageView
-        android:id="@+id/iv_jifen"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/jifen"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"/>
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/menu_me" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="我的积分"
-        android:layout_centerVertical="true"
-        android:textColor="@android:color/black"
-        android:layout_toRightOf="@id/iv_jifen"/>
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="登录/注册"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_right"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/colorSpace" />
 
-    <!-- 收藏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_collect"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/collect" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="我的收藏"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_collect"
-            android:textColor="@android:color/black" />
+            <!--积分-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/iv_jifen"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/jifen" />
 
-    <!--我的文章-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_article"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/wenzhang" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="我的文章"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_article"
-            android:textColor="@android:color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_jifen"
+                    android:text="我的积分"
+                    android:textColor="@android:color/black" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
 
-    <!--TODO-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_todo"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/renwu" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="TODO"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_todo"
-            android:textColor="@android:color/black" />
+            <!-- 收藏-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/iv_collect"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/collect" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/colorSpace" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_collect"
+                    android:text="我的收藏"
+                    android:textColor="@android:color/black" />
 
-    <!--开源网站-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_kaiyuan"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/web" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="开源网站"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_kaiyuan"
-            android:textColor="@android:color/black" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+            <!--我的文章-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
-    <!--加入我们-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_join"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/jairu" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="加入我们"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_join"
-            android:textColor="@android:color/black" />
+                <ImageView
+                    android:id="@+id/iv_article"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/wenzhang" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_article"
+                    android:text="我的文章"
+                    android:textColor="@android:color/black" />
 
-    <!--一些示例-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_sample"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_demo" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="一些示例"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_sample"
-            android:textColor="@android:color/black" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            <!--TODO-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
 
-    <!--一些示例-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingLeft="20dp"
-        android:paddingEnd="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/iv_setting"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/shezhi" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:text="设置"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/iv_setting"
-            android:textColor="@android:color/black" />
+                <ImageView
+                    android:id="@+id/iv_todo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/renwu" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_right"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_todo"
+                    android:text="TODO"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/colorSpace" />
+
+            <!--开源网站-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_kaiyuan"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/web" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_kaiyuan"
+                    android:text="开源网站"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
+
+            <!--加入我们-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_join"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/jairu" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_join"
+                    android:text="加入我们"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
+
+            <!--一些示例-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_sample"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_demo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_sample"
+                    android:text="一些示例"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
+
+            <!--一些示例-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_setting"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/shezhi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/iv_setting"
+                    android:text="设置"
+                    android:textColor="@android:color/black" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_right" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

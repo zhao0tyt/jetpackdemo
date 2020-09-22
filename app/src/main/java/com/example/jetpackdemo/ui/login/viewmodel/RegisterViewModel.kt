@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetpackdemo.BaseApplication
+import com.example.jetpackdemo.App
 import com.example.jetpackdemo.data.model.Register
 import com.example.jetpackdemo.data.repository.AppRepository
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ class RegisterViewModel(private val repository: AppRepository) : ViewModel() {
     var name = MutableLiveData("")
     var pwd = MutableLiveData("")
     var repwd = MutableLiveData("")
-    val context = BaseApplication.context
+    val context = App.context
 
     /**
      * 用户名改变的回调函数

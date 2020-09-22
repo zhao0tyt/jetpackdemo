@@ -5,13 +5,13 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.jetpackdemo.BaseApplication
+import com.example.jetpackdemo.App
 import com.example.jetpackdemo.ui.MainActivity
 
 class LoginViewModel : ViewModel(){
     var name = MutableLiveData("")
     var pwd = MutableLiveData("")
-    val context = BaseApplication.context
+    val context = App.context
     /**
      * 用户名改变的回调函数
      */
