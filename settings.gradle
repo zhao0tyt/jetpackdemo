@@ -1,2 +1,3 @@
+include ':common-components'
 include ':app'
 rootProject.name = "JetPackDemo"
