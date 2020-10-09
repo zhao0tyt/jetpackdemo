@@ -24,5 +24,10 @@
             </intent-filter>
         </activity>
     </application>
-
+    <meta-data
+        android:name="design_width_in_dp"
+        android:value="360"/>
+    <meta-data
+        android:name="design_height_in_dp"
+        android:value="640"/>
 </manifest>
