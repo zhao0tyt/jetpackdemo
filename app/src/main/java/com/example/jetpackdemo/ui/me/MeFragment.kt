@@ -14,13 +14,13 @@ class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        Log.d("zzq","initView")
 //        mDatabind.vm = mViewModel
 //        mDatabind.click = ProxyClick()
         mDatabind.apply {
             vm = mViewModel
             click = ProxyClick()
         }
+
     }
 
     inner class ProxyClick {
