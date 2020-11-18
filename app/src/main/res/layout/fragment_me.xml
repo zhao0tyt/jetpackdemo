@@ -6,6 +6,9 @@
         <variable
             name="vm"
             type="com.example.jetpackdemo.ui.me.MeViewModel" />
+        <variable
+            name="click"
+            type="com.example.jetpackdemo.ui.me.MeFragment.ProxyClick" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -47,6 +50,9 @@
                 android:paddingStart="20dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="15dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{()->click.login()}"
                 android:paddingBottom="15dp">
 
                 <ImageView

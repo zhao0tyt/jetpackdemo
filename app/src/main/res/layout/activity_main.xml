@@ -10,21 +10,11 @@
         android:id="@+id/main_nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_nav" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:menu="@menu/menu_main"
-        app:labelVisibilityMode="labeled"
-        android:background="@android:color/white"
-        app:itemIconTint="@color/color_state_menu_navi"
-        app:itemTextColor="@color/color_state_menu_navi" />
-    <!--app:labelVisibilityMode="labeled",解决控件item多于3个时文字不显示问题-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

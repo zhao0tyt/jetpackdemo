@@ -26,12 +26,26 @@ object CacheUtil {
         val kv = MMKV.defaultMMKV()
         if (userResponse == null) {
             kv.encode("user", "")
-//            setIsLogin(false)
+            setIsLogin(false)
         } else {
             kv.encode("user", Gson().toJson(userResponse))
-//            setIsLogin(true)
+            setIsLogin(true)
         }
 
     }
+    /**
+     * 是否已经登录
+     */
+    fun isLogin(): Boolean {
+        val kv = MMKV.mmkvWithID("app")
+        return kv.decodeBool("login", false)
+    }
 
+    /**
+     * 设置是否已经登录
+     */
+    fun setIsLogin(isLogin: Boolean) {
+        val kv = MMKV.mmkvWithID("app")
+        kv.encode("login", isLogin)
+    }
 }
