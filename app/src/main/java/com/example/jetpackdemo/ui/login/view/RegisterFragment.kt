@@ -2,14 +2,20 @@ package com.example.jetpackdemo.ui.login.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.jetpackdemo.R
 import com.example.jetpackdemo.databinding.FragmentRegisterBinding
+import com.example.jetpackdemo.ext.initClose
+import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.ui.login.viewmodel.RegisterViewModel
 import com.example.jetpackdemo.util.InjectorUtil
-import kotlinx.android.synthetic.main.fragment_login.txt_cancel
+import com.zzq.common.base.viewmodel.BaseViewModel
+import com.zzq.common.ext.nav
+import kotlinx.android.synthetic.main.fragment_login.et_account
+import kotlinx.android.synthetic.main.fragment_login.et_pwd
+import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_welcome.btn_register
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 /**
@@ -17,32 +23,26 @@ import kotlinx.android.synthetic.main.fragment_login.txt_cancel
  * Use the [RegisterFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment<BaseViewModel, FragmentRegisterBinding>() {
 
     private val viewModel: RegisterViewModel by viewModels {
         InjectorUtil.getRegisterViewModelFactory()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun layoutId(): Int {
+        return R.layout.fragment_register
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentRegisterBinding.inflate(inflater, container, false)
-        binding.model = viewModel
-        binding.activity = activity
-        binding.lifecycleOwner = this
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        txt_cancel.setOnClickListener {
-            activity?.onBackPressed()
+    override fun initView(savedInstanceState: Bundle?) {
+        mDatabind.model = viewModel
+        toolbar.initClose("注册") {
+            nav().navigateUp()
+        }
+        btn_register.setOnClickListener{
+            val username = et_account.text.toString()
+            val password = et_pwd.text.toString()
+            val repassword = et_repwd.text.toString()
+            viewModel.register(username, password, repassword)
         }
     }
 }

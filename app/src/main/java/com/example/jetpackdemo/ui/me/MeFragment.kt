@@ -26,7 +26,6 @@ class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>() {
     inner class ProxyClick {
         /** 登录 */
         fun login() {
-            Log.d("zzq","login");
             nav().jumpByLogin {}
         }
     }

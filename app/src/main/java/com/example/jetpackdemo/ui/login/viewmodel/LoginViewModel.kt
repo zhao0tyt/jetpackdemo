@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jetpackdemo.App
 import com.example.jetpackdemo.ui.MainActivity
+import com.zzq.common.ext.nav
 
 class LoginViewModel : ViewModel(){
     var name = MutableLiveData("")

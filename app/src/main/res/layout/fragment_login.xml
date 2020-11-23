@@ -20,22 +20,7 @@
         tools:context=".ui.login.view.LoginFragment">
 
 
-        <TextView
-            android:id="@+id/txt_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_back"
-            android:drawableLeft="@drawable/ic_back"
-            android:text="Cancel"
-            android:onClick="@{()-> activity.onBackPressed()}"
-            android:drawablePadding="10dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/txt_big_size"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include layout="@layout/toolbar" />
 
         <TextView
             android:id="@+id/txt_title"
@@ -114,5 +99,15 @@
             app:layout_constraintVertical_bias="0.5"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.8" />
+        <Button
+            android:id="@+id/btn_go_register"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去注册"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_login"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

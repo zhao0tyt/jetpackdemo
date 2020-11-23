@@ -11,39 +11,12 @@ import com.example.jetpackdemo.data.repository.AppRepository
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val repository: AppRepository) : ViewModel() {
-    var name = MutableLiveData("")
-    var pwd = MutableLiveData("")
-    var repwd = MutableLiveData("")
     val context = App.context
 
-    /**
-     * 用户名改变的回调函数
-     */
-
-    fun onNameChanged(s: CharSequence) {
-        name.value = s.toString()
-    }
-
-    /**
-     * 密码改变的回调函数
-     */
-    fun onPwdChanged(s: CharSequence) {
-        pwd.value = s.toString()
-    }
-
-    /**
-     * 确认密码的回调函数
-     */
-    fun onRepwdChanged(s: CharSequence) {
-        repwd.value = s.toString()
-    }
-
-    fun register() {
-        Log.d("zzq", "register")
+    fun register(username: String, password: String, repassword: String) {
         viewModelScope.launch {
             var registerData: Register =
-                repository.register(name.value!!, pwd.value!!, repwd.value!!)
-            Log.d("zzq", "registerData=" + registerData.toString())
+                repository.register(username, password, repassword)
             if (registerData.errorCode == 0) {
                 Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show()
             } else {
