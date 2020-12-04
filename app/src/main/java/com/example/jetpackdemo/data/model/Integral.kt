@@ -1,0 +1,18 @@
+package com.example.jetpackdemo.data.model
+
+import android.annotation.SuppressLint
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+/**
+ * 积分
+ */
+@SuppressLint("ParcelCreator")
+@Parcelize
+data class Integral(
+    var coinCount: String,//当前积分
+    var rank: String,
+    var userId: String,
+    var username: String) : Parcelable
+
+

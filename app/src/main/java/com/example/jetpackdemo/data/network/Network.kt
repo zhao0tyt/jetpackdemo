@@ -15,12 +15,13 @@ class Network {
 
     private val appService = ServiceCreator.create(AppService::class.java)
 
-    suspend fun register(
-        username: String,
-        password: String,
-        repassword: String
-    ) =
+    suspend fun register(username: String, password: String, repassword: String) =
         appService.register(username, password, repassword).await()
+
+    suspend fun login(username: String, password: String) =
+        appService.login(username, password).await()
+
+    suspend fun getIntegral() = appService.getIntegral().await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->

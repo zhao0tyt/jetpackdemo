@@ -3,6 +3,9 @@ package com.example.jetpackdemo.ui.base
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.example.jetpackdemo.AppViewModel
+import com.example.jetpackdemo.ext.dismissLoadingExt
+import com.example.jetpackdemo.ext.hideSoftKeyboard
+import com.example.jetpackdemo.ext.showLoadingExt
 import com.zzq.common.base.fragment.BaseVmDbFragment
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.getAppViewModel
@@ -41,8 +44,8 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
      * 打开等待框
      */
     override fun showLoading(message: String) {
-        //创建dialog并显示
-//        showLoadingExt(message)
+//        创建dialog并显示
+        showLoadingExt(message)
     }
 
     /**
@@ -50,6 +53,11 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
      */
     override fun dismissLoading() {
         //关闭dialog
-//        dismissLoadingExt()
+        dismissLoadingExt()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideSoftKeyboard(activity)
     }
 }

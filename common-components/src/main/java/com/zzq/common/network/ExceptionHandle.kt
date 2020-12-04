@@ -3,6 +3,7 @@ package com.zzq.common.network
 import android.net.ParseException
 import android.util.MalformedJsonException
 import com.google.gson.JsonParseException
+import com.zzq.common.util.LogUtil
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException

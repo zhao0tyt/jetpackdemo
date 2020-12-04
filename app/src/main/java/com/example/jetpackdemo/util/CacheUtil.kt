@@ -4,6 +4,7 @@ import android.text.TextUtils
 import com.example.jetpackdemo.data.model.UserInfo
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
+import com.zzq.common.util.LogUtil
 
 object CacheUtil {
     /**

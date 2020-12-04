@@ -128,7 +128,7 @@ fun <T> BaseViewModel.request(
         }.onSuccess {
             resultState.paresResult(it)
         }.onFailure {
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("JetpackDemo")
             resultState.paresException(it)
         }
     }
@@ -155,7 +155,7 @@ fun <T> BaseViewModel.requestNoCheck(
         }.onSuccess {
             resultState.paresResult(it)
         }.onFailure {
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("JetpackDemo")
             resultState.paresException(it)
         }
     }
@@ -190,7 +190,7 @@ fun <T> BaseViewModel.request(
                 executeResponse(it) { t -> success(t) }
             }.onFailure { e ->
                 //打印错误消息
-                e.message?.loge("JetpackMvvm")
+                e.message?.loge("JetpackDemo")
                 //失败回调
                 error(ExceptionHandle.handleException(e))
             }
@@ -198,7 +198,7 @@ fun <T> BaseViewModel.request(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("JetpackDemo")
             //失败回调
             error(ExceptionHandle.handleException(it))
         }
@@ -235,7 +235,7 @@ fun <T> BaseViewModel.requestNoCheck(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
-            it.message?.loge("JetpackMvvm")
+            it.message?.loge("JetpackDemo")
             //失败回调
             error(ExceptionHandle.handleException(it))
         }

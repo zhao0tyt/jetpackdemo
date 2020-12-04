@@ -1,42 +1,23 @@
 package com.example.jetpackdemo.ui.login.viewmodel
 
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.jetpackdemo.App
-import com.example.jetpackdemo.ui.MainActivity
-import com.zzq.common.ext.nav
+import com.example.jetpackdemo.data.model.Register
+import com.example.jetpackdemo.data.model.UserInfo
+import com.example.jetpackdemo.data.repository.AppRepository
+import com.zzq.common.base.viewmodel.BaseViewModel
+import com.zzq.common.ext.request
+import com.zzq.common.state.ResultState
 
-class LoginViewModel : ViewModel(){
-    var name = MutableLiveData("")
-    var pwd = MutableLiveData("")
-    val context = App.context
-    /**
-     * 用户名改变的回调函数
-     */
+class LoginViewModel(private val repository: AppRepository) : BaseViewModel(){
+    var loginResult = MutableLiveData<ResultState<UserInfo>>()
 
-    fun onNameChanged(s: CharSequence) {
-        name.value = s.toString()
-    }
-
-    /**
-     * 密码改变的回调函数
-     */
-    fun onPwdChanged(s: CharSequence) {
-        pwd.value = s.toString()
-    }
-
-    fun login() {
-        if (name.value.equals("zzq") && pwd.value.equals("123456")) {
-            Toast.makeText(context, "登录成功", Toast.LENGTH_SHORT).show()
-            val intent = Intent(context, MainActivity::class.java)
-            intent.flags = FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(intent)
-        } else {
-            Toast.makeText(context, "登录失败", Toast.LENGTH_SHORT).show()
-        }
+    fun login(username: String, password: String) {
+        request(
+            { repository.login(username, password) },
+            loginResult,
+            true,
+            "正在登录中..."
+        )
     }
 
 }

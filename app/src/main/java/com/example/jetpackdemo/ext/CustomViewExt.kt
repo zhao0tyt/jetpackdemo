@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.jetpackdemo.R
@@ -95,6 +96,17 @@ fun hideSoftKeyboard(activity: Activity?) {
                 view.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
+        }
+    }
+}
+
+/**
+ * 初始化 SwipeRefreshLayout
+ */
+fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
+    this.run {
+        setOnRefreshListener {
+            onRefreshListener.invoke()
         }
     }
 }

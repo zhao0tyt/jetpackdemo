@@ -6,22 +6,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetpackdemo.App
+import com.example.jetpackdemo.data.model.ApiResponse
 import com.example.jetpackdemo.data.model.Register
+import com.example.jetpackdemo.data.model.UserInfo
 import com.example.jetpackdemo.data.repository.AppRepository
+import com.zzq.common.base.viewmodel.BaseViewModel
+import com.zzq.common.ext.request
+import com.zzq.common.state.ResultState
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val repository: AppRepository) : ViewModel() {
-    val context = App.context
+class RegisterViewModel(private val repository: AppRepository) : BaseViewModel() {
+
+    var registerResult = MutableLiveData<ResultState<Any>>()
 
     fun register(username: String, password: String, repassword: String) {
-        viewModelScope.launch {
-            var registerData: Register =
-                repository.register(username, password, repassword)
-            if (registerData.errorCode == 0) {
-                Toast.makeText(context, "注册成功", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "注册失败", Toast.LENGTH_SHORT).show()
-            }
-        }
+        request(
+            { repository.register(username, password, repassword) },
+            registerResult,
+            true,
+            "正在注册中..."
+        )
     }
 }

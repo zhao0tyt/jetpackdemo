@@ -41,7 +41,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
 
     private fun init(savedInstanceState: Bundle?) {
         mViewModel = createViewModel()
-        registerUiChange()
+//        registerUiChange()
         initView(savedInstanceState)
         createObserver()
         NetworkStateManager.instance.mNetworkStateCallback.observe(this, Observer {
