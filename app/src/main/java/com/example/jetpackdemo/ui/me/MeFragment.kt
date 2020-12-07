@@ -98,6 +98,13 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
                 Toast.makeText(context,"change avatar",Toast.LENGTH_SHORT).show()
             }
         }
+
+        /** 积分点击事件 */
+        fun integral() {
+            nav().jumpByLogin {
+                it.navigate(R.id.action_mainfragment_to_integralFragment)
+            }
+        }
     }
 }
 

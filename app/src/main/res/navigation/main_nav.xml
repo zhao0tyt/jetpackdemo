@@ -8,7 +8,15 @@
         android:id="@+id/mainFragment"
         android:name="com.example.jetpackdemo.ui.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainfragment_to_integralFragment"
+            app:destination="@id/integralFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -63,6 +71,12 @@
         android:name="com.example.jetpackdemo.ui.login.view.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/integralFragment"
+        android:name="com.example.jetpackdemo.ui.integral.IntegralFragment"
+        android:label="IntegralFragment"
+        tools:layout="@layout/fragment_integral" />
 
     <action
         android:id="@+id/action_to_loginFragment"
