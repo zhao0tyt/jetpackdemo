@@ -23,6 +23,8 @@ class Network {
 
     suspend fun getIntegral() = appService.getIntegral().await()
 
+    suspend fun getIntegralRank(page: Int) = appService.getIntegralRank(page).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

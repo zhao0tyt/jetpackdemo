@@ -24,6 +24,11 @@ class AppRepository(private val network: Network) {
         response
     }
 
+    suspend fun getIntegralRank(page: Int) = withContext(Dispatchers.IO) {
+        val response = network.getIntegralRank(page)
+        response
+    }
+
     companion object {
 
         private var repository: AppRepository? = null

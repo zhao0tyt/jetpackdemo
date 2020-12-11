@@ -8,7 +8,6 @@ import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.databinding.FragmentIntegralBinding
 import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.util.InjectorUtil
-import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.util.notNull
 import kotlinx.android.synthetic.main.fragment_integral.*
