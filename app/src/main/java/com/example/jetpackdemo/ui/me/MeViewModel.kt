@@ -1,7 +1,7 @@
 package com.example.jetpackdemo.ui.me
 
 import androidx.lifecycle.MutableLiveData
-import com.example.jetpackdemo.data.model.Integral
+import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.data.repository.AppRepository
 import com.example.jetpackdemo.util.ColorUtil
 import com.zzq.common.base.viewmodel.BaseViewModel
@@ -14,7 +14,7 @@ class MeViewModel(private val repository: AppRepository)  : BaseViewModel(){
     var integral = MutableLiveData<String>("0")
     var info = MutableLiveData<String>("id：--　排名：--")
     var imageUrl = MutableLiveData<String>(ColorUtil.randomImage())
-    var meData = MutableLiveData<ResultState<Integral>>()
+    var meData = MutableLiveData<ResultState<IntegralResponse>>()
 
     fun getIntegral() {
         request(

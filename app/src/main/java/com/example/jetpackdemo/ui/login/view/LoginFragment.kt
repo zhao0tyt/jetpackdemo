@@ -56,7 +56,7 @@ class LoginFragment : BaseFragment<BaseViewModel, FragmentLoginBinding>(), View.
                         //登录成功 通知账户数据发生改变鸟
                         CacheUtil.setUser(it)
                         CacheUtil.setIsLogin(true)
-                        appViewModel.userinfo.postValue(it)
+                        appViewModel.userinfo.value = it
                         nav().navigateAction(R.id.action_loginFragment_to_mainFrgment)
                     }, {
                         showMessage(it.errorMsg)

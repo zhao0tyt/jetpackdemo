@@ -1,13 +1,11 @@
 package com.example.jetpackdemo.data.network.api
 
+import com.example.jetpackdemo.data.model.ApiPagerResponse
 import com.example.jetpackdemo.data.model.ApiResponse
-import com.example.jetpackdemo.data.model.Integral
+import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.data.model.UserInfo
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AppService {
 
@@ -36,6 +34,12 @@ interface AppService {
      * 获取当前账户的个人积分
      */
     @GET("lg/coin/userinfo/json")
-    fun getIntegral(): Call<ApiResponse<Integral>>
+    fun getIntegral(): Call<ApiResponse<IntegralResponse>>
+
+    /**
+     * 获取积分排行榜
+     */
+    @GET("coin/rank/{page}/json")
+    fun getIntegralRank(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<IntegralResponse>>>
 }
 

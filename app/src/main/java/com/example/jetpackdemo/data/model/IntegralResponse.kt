@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class Integral(
+data class IntegralResponse(
     var coinCount: String,//当前积分
     var rank: String,
     var userId: String,

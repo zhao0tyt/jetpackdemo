@@ -1,21 +1,19 @@
 package com.example.jetpackdemo.ui.me
 
-import android.media.CamcorderProfile
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.jetpackdemo.R
-import com.example.jetpackdemo.data.model.Integral
-import com.example.jetpackdemo.ui.base.BaseFragment
+import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.databinding.FragmentMeBinding
 import com.example.jetpackdemo.ext.init
 import com.example.jetpackdemo.ext.jumpByLogin
-import com.example.jetpackdemo.ui.login.viewmodel.LoginViewModel
+import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.util.InjectorUtil
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.nav
+import com.zzq.common.ext.navigateAction
 import com.zzq.common.ext.parseState
 import com.zzq.common.ext.util.notNull
 import com.zzq.common.util.LogUtil
@@ -23,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_me.*
 
 class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
 
-    private var integral: Integral? = null
+    private var integralResponse: IntegralResponse? = null
 
     private val meViewModel: MeViewModel by viewModels {
         InjectorUtil.getMeViewModelFactory()
@@ -58,9 +56,9 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
         meViewModel.meData.observe(viewLifecycleOwner, Observer { resultState ->
             me_swipe.isRefreshing = false
             parseState(resultState, {
-                integral = it
-                meViewModel.info.postValue("id：${it.userId}　排名：${it.rank}")
-                meViewModel.integral.postValue(it.coinCount)
+                integralResponse = it
+                meViewModel.info.value = "id：${it.userId}　排名：${it.rank}"
+                meViewModel.integral.value = it.coinCount
             }, {
                 Toast.makeText(context,it.errorMsg,Toast.LENGTH_SHORT).show()
             })
@@ -76,9 +74,9 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
                     me_swipe.isRefreshing = true
                     meViewModel.getIntegral()
                 }, {
-                    meViewModel.name.postValue("请先登录~")
-                    meViewModel.info.postValue("id：--　排名：--")
-                    meViewModel.integral.postValue("0")
+                    meViewModel.name.value = "请先登录~"
+                    meViewModel.info.value = "id：--　排名：--"
+                    meViewModel.integral.value = "0"
                 })
             })
         }
@@ -102,7 +100,11 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
         /** 积分点击事件 */
         fun integral() {
             nav().jumpByLogin {
-                it.navigate(R.id.action_mainfragment_to_integralFragment)
+                it.navigateAction(R.id.action_mainfragment_to_integralFragment,
+                    Bundle().apply {
+                        putParcelable("rank", integralResponse)
+                    }
+                )
             }
         }
     }
