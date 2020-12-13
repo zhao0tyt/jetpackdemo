@@ -79,8 +79,7 @@ dependencies {
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     // Jetpack paging3
-    def paging_version = "3.0.0-alpha10"
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-runtime:3.0.0-alpha10"
     implementation "androidx.paging:paging-compose:1.0.0-alpha03"
 
 }
