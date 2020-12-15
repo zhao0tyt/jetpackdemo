@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -109,4 +110,16 @@ fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
             onRefreshListener.invoke()
         }
     }
+}
+
+/**
+ * 初始化RecyclerView
+ */
+fun RecyclerView.init(
+    layoutManger: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>
+): RecyclerView {
+    layoutManager = layoutManger
+    adapter = bindAdapter
+    return this
 }
