@@ -17,7 +17,7 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>() 
     private var rank: IntegralResponse? = null
 
     private val viewModel: IntegralViewModel by viewModels {
-        InjectorUtil.getIntegralViewModelFactory()
+        InjectorUtil.getIntegralViewModelFactory(requireContext())
     }
 
     override fun layoutId() = R.layout.fragment_integral

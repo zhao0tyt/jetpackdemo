@@ -1,12 +1,16 @@
 package com.example.jetpackdemo.data.repository
 
-import com.example.jetpackdemo.data.model.ApiResponse
-import com.example.jetpackdemo.data.model.UserInfo
+import android.os.SystemClock
+import com.example.jetpackdemo.data.dao.AppDatabase
+import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.data.network.Network
+import com.example.jetpackdemo.data.network.RequestStateCallback
+import com.zzq.common.ext.util.shouldUpdate
+import com.zzq.common.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AppRepository(private val network: Network) {
+class AppRepository(private val appDatabase: AppDatabase, private val network: Network) {
 
     suspend fun register(username: String, password: String, repassword: String) =
         withContext(Dispatchers.IO) {
@@ -15,12 +19,34 @@ class AppRepository(private val network: Network) {
         }
 
     suspend fun login(username: String, password: String) = withContext(Dispatchers.IO) {
+
         val response = network.login(username, password)
         response
     }
 
-    suspend fun getIntegral() = withContext(Dispatchers.IO) {
-        val response = network.getIntegral()
+    suspend fun getIntegral(userId: String, callback: RequestStateCallback): IntegralResponse{
+        var integralResponse = getIntegralFromDb(userId)
+        if (integralResponse == null || integralResponse.mLastTime.shouldUpdate()) {
+            val response = getIntegralFromNetWork()
+            if (response.isSucces()) {
+                integralResponse = response.data
+                integralResponse.mLastTime = System.currentTimeMillis()
+                appDatabase.integralDao().insert(integralResponse)
+                callback.success()
+            } else {
+                callback.failed()
+            }
+        }
+        return integralResponse
+    }
+
+    suspend fun getIntegralFromNetWork() = withContext(Dispatchers.IO) {
+        var response = network.getIntegral()
+        response
+    }
+
+    suspend fun getIntegralFromDb(userId: String) = withContext(Dispatchers.IO) {
+        var response = appDatabase.integralDao().getIntegral(userId)
         response
     }
 
@@ -28,11 +54,11 @@ class AppRepository(private val network: Network) {
 
         private var repository: AppRepository? = null
 
-        fun getInstance(network: Network): AppRepository {
+        fun getInstance(appDatabase: AppDatabase, network: Network): AppRepository {
             if (repository == null) {
                 synchronized(AppRepository::class.java) {
                     if (repository == null) {
-                        repository = AppRepository(network)
+                        repository = AppRepository(appDatabase, network)
                     }
                 }
             }

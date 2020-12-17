@@ -5,6 +5,7 @@ import com.example.jetpackdemo.util.CacheUtil
 import com.example.jetpackdemo.util.SettingUtil
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.zzq.common.base.viewmodel.BaseViewModel
+import com.zzq.common.util.LogUtil
 
 /**
  * 描述　:APP全局的ViewModel，可以存放公共数据，当他数据改变时，所有监听他的地方都会收到回调,也可以做发送消息

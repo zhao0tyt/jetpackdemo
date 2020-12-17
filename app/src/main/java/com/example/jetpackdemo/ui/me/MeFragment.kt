@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.model.IntegralResponse
+import com.example.jetpackdemo.data.network.RequestStateCallback
 import com.example.jetpackdemo.databinding.FragmentMeBinding
 import com.example.jetpackdemo.ext.init
 import com.example.jetpackdemo.ext.jumpByLogin
@@ -19,12 +20,12 @@ import com.zzq.common.ext.util.notNull
 import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_me.*
 
-class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
+class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>(), RequestStateCallback{
 
     private var integralResponse: IntegralResponse? = null
 
     private val meViewModel: MeViewModel by viewModels {
-        InjectorUtil.getMeViewModelFactory()
+        InjectorUtil.getMeViewModelFactory(requireContext())
     }
 
     override fun layoutId(): Int {
@@ -38,41 +39,26 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
             vm = meViewModel
             click = ProxyClick()
         }
-        me_swipe.init {
-            meViewModel.getIntegral()
-        }
     }
 
     override fun lazyLoadData() {
         //用户信息不为空时调用获取积分接口
         appViewModel.userinfo.value?.run {
-            me_swipe.isRefreshing = true
-            LogUtil.logd("zzq, lazyLoadData")
-            meViewModel.getIntegral()
+            meViewModel.getIntegral(appViewModel.userinfo.value!!.id,this@MeFragment)
         }
     }
 
     override fun createObserver() {
-        meViewModel.meData.observe(viewLifecycleOwner, Observer { resultState ->
-            me_swipe.isRefreshing = false
-            parseState(resultState, {
-                integralResponse = it
-                meViewModel.info.value = "id：${it.userId}　排名：${it.rank}"
-                meViewModel.integral.value = it.coinCount
-            }, {
-                Toast.makeText(context,it.errorMsg,Toast.LENGTH_SHORT).show()
-            })
+        meViewModel.meData.observe(viewLifecycleOwner, Observer {
+            meViewModel.info.value = "id：${it.userId}　排名：${it.rank}"
+            meViewModel.integral.value = it.coinCount
         })
 
-
         appViewModel.run {
-            appViewModel.userinfo.observe(viewLifecycleOwner, Observer {
-                meViewModel.name.value = it.username
-            })
             userinfo.observe(viewLifecycleOwner, Observer {
                 it.notNull({
-                    me_swipe.isRefreshing = true
-                    meViewModel.getIntegral()
+                    meViewModel.name.value = it.username
+                    meViewModel.getIntegral(appViewModel.userinfo.value!!.id, this@MeFragment)
                 }, {
                     meViewModel.name.value = "请先登录~"
                     meViewModel.info.value = "id：--　排名：--"
@@ -107,6 +93,14 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>() {
                 )
             }
         }
+    }
+
+    override fun success() {
+        Toast.makeText(context,"success",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun failed() {
+        Toast.makeText(context,"failed",Toast.LENGTH_SHORT).show()
     }
 }
 

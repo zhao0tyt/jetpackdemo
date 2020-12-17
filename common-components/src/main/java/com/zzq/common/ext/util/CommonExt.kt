@@ -10,3 +10,7 @@ inline fun <reified T> T?.notNull(notNullAction: (T) -> Unit, nullAction: () -> 
         nullAction.invoke()
     }
 }
+
+private val intervalTime = 1000 * 60 * 60
+
+fun Long?.shouldUpdate() = (System.currentTimeMillis() - (this ?: 0L)) > intervalTime

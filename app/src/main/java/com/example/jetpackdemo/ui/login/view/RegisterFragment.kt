@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 class RegisterFragment : BaseFragment<BaseViewModel, FragmentRegisterBinding>() {
 
     private val viewModel: RegisterViewModel by viewModels {
-        InjectorUtil.getRegisterViewModelFactory()
+        InjectorUtil.getRegisterViewModelFactory(requireContext())
     }
 
     override fun layoutId(): Int {

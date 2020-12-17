@@ -306,3 +306,12 @@ fun <T> MutableLiveData<ResultState<T>>.paresResult(result: T) {
 fun <T> MutableLiveData<ResultState<T>>.paresException(e: Throwable) {
     this.value = ResultState.onAppError(ExceptionHandle.handleException(e))
 }
+
+
+fun BaseViewModel.request(block: suspend () -> Unit, error: suspend (Throwable) -> Unit) = viewModelScope.launch {
+    try {
+        block()
+    } catch (e: Throwable) {
+        error(e)
+    }
+}

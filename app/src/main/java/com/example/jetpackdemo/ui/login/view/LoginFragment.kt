@@ -17,6 +17,7 @@ import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.nav
 import com.zzq.common.ext.navigateAction
 import com.zzq.common.ext.parseState
+import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.et_account
 import kotlinx.android.synthetic.main.fragment_login.et_pwd
@@ -32,7 +33,7 @@ class LoginFragment : BaseFragment<BaseViewModel, FragmentLoginBinding>(), View.
 //    private val loginModel: LoginViewModel by viewModels()
 
     private val loginModel: LoginViewModel by viewModels {
-        InjectorUtil.getLoginViewModelFactory()
+        InjectorUtil.getLoginViewModelFactory(requireContext())
     }
 
     override fun layoutId(): Int {

@@ -1,5 +1,7 @@
 package com.example.jetpackdemo.util
 
+import android.content.Context
+import com.example.jetpackdemo.data.dao.AppDatabase
 import com.example.jetpackdemo.data.network.Network
 import com.example.jetpackdemo.data.repository.AppRepository
 import com.example.jetpackdemo.ui.integral.IntegralModelFactory
@@ -8,13 +10,13 @@ import com.example.jetpackdemo.ui.login.viewmodel.RegisterModelFactory
 import com.example.jetpackdemo.ui.me.MeModelFactory
 
 object InjectorUtil {
-    private fun getAppRepository() = AppRepository.getInstance(Network.getInstance())
+    private fun getAppRepository(context: Context) = AppRepository.getInstance(AppDatabase.getDatabase(context), Network.getInstance())
 
-    fun getRegisterViewModelFactory() = RegisterModelFactory(getAppRepository())
+    fun getRegisterViewModelFactory(context: Context) = RegisterModelFactory(getAppRepository(context))
 
-    fun getLoginViewModelFactory() = LoginModelFactory(getAppRepository())
+    fun getLoginViewModelFactory(context: Context) = LoginModelFactory(getAppRepository(context))
 
-    fun getMeViewModelFactory() = MeModelFactory(getAppRepository())
+    fun getMeViewModelFactory(context: Context) = MeModelFactory(getAppRepository(context))
 
-    fun getIntegralViewModelFactory() = IntegralModelFactory(getAppRepository())
+    fun getIntegralViewModelFactory(context: Context) = IntegralModelFactory(getAppRepository(context))
 }

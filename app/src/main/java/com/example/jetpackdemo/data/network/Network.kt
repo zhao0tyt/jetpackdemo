@@ -1,7 +1,5 @@
 package com.example.jetpackdemo.data.network
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.jetpackdemo.data.network.api.AppService
 import com.zzq.common.util.LogUtil
 import retrofit2.Call
@@ -27,6 +25,7 @@ class Network {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onFailure(call: Call<T>, t: Throwable) {
+                    LogUtil.logd("coroutines request failed")
                     continuation.resumeWithException(t)
                 }
 

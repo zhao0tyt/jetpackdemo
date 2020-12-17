@@ -79,5 +79,12 @@ dependencies {
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     //第三方recyclerview
     implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
+
+    // jetpack room
+    implementation "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:2.2.5"
+
 }
 
