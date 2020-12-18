@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.databinding.FragmentIntegralBinding
@@ -39,12 +40,13 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>() 
         }, {
             integral_cardview.visibility = View.GONE
         })
-
-        // Adapter初始化
-        initAdapter()
-
+        integralAdapter = IntegralAdapter()
         // RecyclerView初始化
         recyclerView.init(LinearLayoutManager(context), integralAdapter)
+        // Adapter初始化
+        initAdapter(recyclerView)
+
+
 
         // SwipeRefreshLayout初始化
         swipeRefresh.init {
@@ -61,10 +63,11 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>() 
 
     }
 
-    private fun initAdapter() {
-        integralAdapter = IntegralAdapter().apply { this.withLoadStateHeaderAndFooter(
-            header = HeadLoadStateAdapter(this),
-            footer = HeadLoadStateAdapter(this)) }
+    private fun initAdapter(rl: RecyclerView) {
+//        integralAdapter = IntegralAdapter()
+        rl.adapter = integralAdapter.withLoadStateFooter(
+            HeadLoadStateAdapter(integralAdapter))
+
         lifecycleScope.launchWhenCreated {
             integralAdapter.loadStateFlow.collectLatest { loadStates ->
                 swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading

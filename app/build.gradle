@@ -79,8 +79,8 @@ dependencies {
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     // Jetpack paging3
-    implementation "androidx.paging:paging-runtime:3.0.0-alpha10"
-    implementation "androidx.paging:paging-compose:1.0.0-alpha03"
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha11"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha04"
 
 }
 
