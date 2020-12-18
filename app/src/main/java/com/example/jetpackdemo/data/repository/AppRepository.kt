@@ -1,6 +1,5 @@
 package com.example.jetpackdemo.data.repository
 
-import android.os.SystemClock
 import com.example.jetpackdemo.data.dao.AppDatabase
 import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.data.network.Network
@@ -11,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AppRepository(private val appDatabase: AppDatabase, private val network: Network) {
+    private val integraldao = appDatabase.integralDao()
 
     suspend fun register(username: String, password: String, repassword: String) =
         withContext(Dispatchers.IO) {
@@ -24,14 +24,14 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
         response
     }
 
-    suspend fun getIntegral(userId: String, callback: RequestStateCallback): IntegralResponse{
+    suspend fun getIntegral(userId: String, callback: RequestStateCallback): IntegralResponse {
         var integralResponse = getIntegralFromDb(userId)
         if (integralResponse == null || integralResponse.mLastTime.shouldUpdate()) {
             val response = getIntegralFromNetWork()
             if (response.isSucces()) {
                 integralResponse = response.data
                 integralResponse.mLastTime = System.currentTimeMillis()
-                appDatabase.integralDao().insert(integralResponse)
+                insertIntegral(integralResponse)
                 callback.success()
             } else {
                 callback.failed()
@@ -41,13 +41,20 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
     }
 
     suspend fun getIntegralFromNetWork() = withContext(Dispatchers.IO) {
+        LogUtil.logd("zzq, getIntegralFromNetWork")
         var response = network.getIntegral()
         response
     }
 
     suspend fun getIntegralFromDb(userId: String) = withContext(Dispatchers.IO) {
+        LogUtil.logd("zzq, getIntegralFromDb")
         var response = appDatabase.integralDao().getIntegral(userId)
         response
+    }
+
+    suspend fun insertIntegral(data: IntegralResponse) = withContext(Dispatchers.IO) {
+        LogUtil.logd("zzq, insertIntegral")
+        integraldao.insert(data)
     }
 
     companion object {

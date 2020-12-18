@@ -9,5 +9,5 @@ interface IntegralDao {
     suspend fun insert(data: IntegralResponse)
 
     @Query("SELECT * FROM Integral WHERE userId = :userId")
-    fun getIntegral(userId: String?): IntegralResponse
+    suspend fun getIntegral(userId: String?): IntegralResponse
 }
