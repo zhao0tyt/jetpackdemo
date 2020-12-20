@@ -29,6 +29,7 @@ class Network {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onFailure(call: Call<T>, t: Throwable) {
+                    LogUtil.loge("zzq, onFailure, t ="+t.message)
                     continuation.resumeWithException(t)
                 }
 

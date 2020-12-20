@@ -3,6 +3,7 @@ package com.example.jetpackdemo.data.repository
 import com.example.jetpackdemo.data.model.ApiResponse
 import com.example.jetpackdemo.data.model.UserInfo
 import com.example.jetpackdemo.data.network.Network
+import com.zzq.common.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -25,6 +26,7 @@ class AppRepository(private val network: Network) {
     }
 
     suspend fun getIntegralRank(page: Int) = withContext(Dispatchers.IO) {
+        LogUtil.logd("zzq, getIntegralRank")
         val response = network.getIntegralRank(page)
         response
     }

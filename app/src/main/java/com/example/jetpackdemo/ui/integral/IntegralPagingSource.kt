@@ -3,6 +3,7 @@ package com.example.jetpackdemo.ui.integral
 import androidx.paging.PagingSource
 import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.data.repository.AppRepository
+import com.zzq.common.util.LogUtil
 
 
 class IntegralPagingSource(private val appRepository: AppRepository): PagingSource<Int, IntegralResponse>(){

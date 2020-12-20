@@ -24,8 +24,10 @@ import kotlinx.coroutines.flow.filter
 
 class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>() {
     private var rank: IntegralResponse? = null
-    //适配器
-    private lateinit var integralAdapter: IntegralAdapter
+
+    private val integralAdapter: IntegralAdapter by lazy{
+        IntegralAdapter()
+    }
 
     private val viewModel: IntegralViewModel by viewModels {
         InjectorUtil.getIntegralViewModelFactory()
@@ -40,9 +42,8 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>() 
         }, {
             integral_cardview.visibility = View.GONE
         })
-        integralAdapter = IntegralAdapter()
-        // RecyclerView初始化
-        recyclerView.init(LinearLayoutManager(context), integralAdapter)
+
+        recyclerView.layoutManager = LinearLayoutManager(context)
         // Adapter初始化
         initAdapter(recyclerView)
 
@@ -64,7 +65,6 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>() 
     }
 
     private fun initAdapter(rl: RecyclerView) {
-//        integralAdapter = IntegralAdapter()
         rl.adapter = integralAdapter.withLoadStateFooter(
             HeadLoadStateAdapter(integralAdapter))
 
