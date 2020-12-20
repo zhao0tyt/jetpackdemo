@@ -57,6 +57,11 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
         integraldao.insert(data)
     }
 
+    suspend fun getIntegralRank(page: Int) = withContext(Dispatchers.IO) {
+        val response = network.getIntegralRank(page)
+        response
+    }
+
     companion object {
 
         private var repository: AppRepository? = null

@@ -40,6 +40,6 @@ interface AppService {
      * 获取积分排行榜
      */
     @GET("coin/rank/{page}/json")
-    fun getIntegralRank(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<IntegralResponse>>>
+    fun getIntegralRank(@Path("page") page: Int): Call<ApiResponse<ApiPagerResponse<ArrayList<IntegralResponse>>>>
 }
 

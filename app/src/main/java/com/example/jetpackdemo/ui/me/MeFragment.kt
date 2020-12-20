@@ -50,6 +50,7 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>(), RequestStat
 
     override fun createObserver() {
         meViewModel.meData.observe(viewLifecycleOwner, Observer {
+            integralResponse = it
             meViewModel.info.value = "id：${it.userId}　排名：${it.rank}"
             meViewModel.integral.value = it.coinCount
         })

@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.jetpackdemo"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -85,6 +85,11 @@ dependencies {
     kapt "androidx.room:room-compiler:2.2.5"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.2.5"
+
+
+    // Jetpack paging3
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha11"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha04"
 
 }
 
