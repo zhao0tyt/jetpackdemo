@@ -34,7 +34,7 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
                 insertIntegral(integralResponse)
                 callback.success()
             } else {
-                callback.failed()
+                callback.failed(RequestStateCallback.ErrorType.HTTP)
             }
         }
         return integralResponse

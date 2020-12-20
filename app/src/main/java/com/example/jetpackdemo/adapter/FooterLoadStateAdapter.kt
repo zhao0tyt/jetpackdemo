@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.ui.integral
+package com.example.jetpackdemo.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,30 +7,26 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jetpackdemo.R
-import com.example.jetpackdemo.databinding.RecyclerviewHeaderBinding
+import com.example.jetpackdemo.databinding.RecyclerviewFooterBinding
+import com.example.jetpackdemo.ui.integral.IntegralAdapter
 
-class HeadLoadStateAdapter(private val adapter: IntegralAdapter): LoadStateAdapter<HeadLoadStateViewHolder>(){
-    override fun onBindViewHolder(holder: HeadLoadStateViewHolder, loadState: LoadState) {
+class FooterLoadStateAdapter(private val adapter: IntegralAdapter): LoadStateAdapter<FootLoadStateViewHolder>(){
+    override fun onBindViewHolder(holder: FootLoadStateViewHolder, loadState: LoadState) {
         holder.bindTo(loadState)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         loadState: LoadState
-    ): HeadLoadStateViewHolder {
-        return HeadLoadStateViewHolder(parent){ adapter.retry() }
+    ): FootLoadStateViewHolder {
+        return FootLoadStateViewHolder(parent) { adapter.retry() }
     }
 
 }
 
-class HeadLoadStateViewHolder(parent: ViewGroup, private val retryCallback: () -> Unit) : RecyclerView.ViewHolder
-    (LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_header, parent, false)) {
-    private val binding = RecyclerviewHeaderBinding.bind(itemView)
-    //    private val successMsg = binding.tvRvHeader
-//
-//    fun bindTo(loadState: LoadState) {
-//        successMsg.isVisible = loadState is LoadState.Loading
-//    }
+class FootLoadStateViewHolder(parent: ViewGroup, private val retryCallback: () -> Unit) : RecyclerView.ViewHolder
+    (LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_footer, parent, false)) {
+    private val binding = RecyclerviewFooterBinding.bind(itemView)
     private val progressBar = binding.progressBar
     private val errorMsg = binding.errorMsg
     private val retry = binding.retryButton

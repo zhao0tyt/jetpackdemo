@@ -1,8 +1,12 @@
 package com.example.jetpackdemo.data.network
 
-import com.example.jetpackdemo.data.model.IntegralResponse
 
 interface RequestStateCallback {
     fun success()
-    fun failed()
+    fun failed(type: ErrorType)
+
+    enum class ErrorType {
+        HTTP,
+        DEFAULT
+    }
 }

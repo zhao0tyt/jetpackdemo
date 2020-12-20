@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.model.IntegralResponse
 import com.example.jetpackdemo.data.network.RequestStateCallback
+import com.example.jetpackdemo.data.network.RequestStateCallback.*
 import com.example.jetpackdemo.databinding.FragmentMeBinding
 import com.example.jetpackdemo.ext.init
 import com.example.jetpackdemo.ext.jumpByLogin
@@ -100,7 +101,7 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>(), RequestStat
         Toast.makeText(context,"success",Toast.LENGTH_SHORT).show()
     }
 
-    override fun failed() {
+    override fun failed(type: ErrorType) {
         Toast.makeText(context,"failed",Toast.LENGTH_SHORT).show()
     }
 }

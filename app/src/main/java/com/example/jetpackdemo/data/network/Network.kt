@@ -28,7 +28,7 @@ class Network {
             enqueue(object : Callback<T> {
                 override fun onFailure(call: Call<T>, t: Throwable) {
                     LogUtil.logd("coroutines request failed")
-                    continuation.resumeWithException(t)
+//                    continuation.resumeWithException(t)
                 }
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {
