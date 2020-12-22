@@ -7,10 +7,10 @@ import com.zzq.common.base.activity.BaseVmDbActivity
 import com.zzq.common.base.fragment.BaseVmFragment
 import com.zzq.common.base.network.BaseResponse
 import com.zzq.common.base.viewmodel.BaseViewModel
-import com.zzq.common.ext.util.loge
 import com.zzq.common.network.AppException
 import com.zzq.common.network.ExceptionHandle
 import com.zzq.common.state.ResultState
+import com.zzq.common.util.LogUtil
 import kotlinx.coroutines.*
 
 /**
@@ -128,7 +128,7 @@ fun <T> BaseViewModel.request(
         }.onSuccess {
             resultState.paresResult(it)
         }.onFailure {
-            it.message?.loge("JetpackDemo")
+            LogUtil.loge(it.message!!)
             resultState.paresException(it)
         }
     }
@@ -155,7 +155,7 @@ fun <T> BaseViewModel.requestNoCheck(
         }.onSuccess {
             resultState.paresResult(it)
         }.onFailure {
-            it.message?.loge("JetpackDemo")
+            LogUtil.loge(it.message!!)
             resultState.paresException(it)
         }
     }
@@ -190,7 +190,7 @@ fun <T> BaseViewModel.request(
                 executeResponse(it) { t -> success(t) }
             }.onFailure { e ->
                 //打印错误消息
-                e.message?.loge("JetpackDemo")
+                LogUtil.loge(e.message!!)
                 //失败回调
                 error(ExceptionHandle.handleException(e))
             }
@@ -198,7 +198,7 @@ fun <T> BaseViewModel.request(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
-            it.message?.loge("JetpackDemo")
+            LogUtil.loge(it.message!!)
             //失败回调
             error(ExceptionHandle.handleException(it))
         }
@@ -235,7 +235,7 @@ fun <T> BaseViewModel.requestNoCheck(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
-            it.message?.loge("JetpackDemo")
+            LogUtil.loge(it.message!!)
             //失败回调
             error(ExceptionHandle.handleException(it))
         }

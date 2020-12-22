@@ -41,19 +41,19 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
     }
 
     suspend fun getIntegralFromNetWork() = withContext(Dispatchers.IO) {
-        LogUtil.logd("zzq, getIntegralFromNetWork")
+        LogUtil.logd("getIntegralFromNetWork")
         var response = network.getIntegral()
         response
     }
 
     suspend fun getIntegralFromDb(userId: String) = withContext(Dispatchers.IO) {
-        LogUtil.logd("zzq, getIntegralFromDb")
+        LogUtil.logd("getIntegralFromDb")
         var response = appDatabase.integralDao().getIntegral(userId)
         response
     }
 
     suspend fun insertIntegral(data: IntegralResponse) = withContext(Dispatchers.IO) {
-        LogUtil.logd("zzq, insertIntegral")
+        LogUtil.logd("insertIntegral")
         integraldao.insert(data)
     }
 

@@ -10,7 +10,7 @@ import android.util.Log
  * 描述　:
  */
 object LogUtil {
-    private const val TAG = "JetpackDemo"
+    private const val TAG = "zzq"
     var IS_DEBUG = true
 
     private enum class LEVEL {
@@ -21,7 +21,7 @@ object LogUtil {
     fun logv(message: String) = log(LEVEL.V, TAG, message)
 
     fun logd(tag: String = TAG, message: String) = log(LEVEL.D, tag, message)
-    fun logd(message: String) = log(LEVEL.D, TAG, message)
+    fun logd(message: String) = log(LEVEL.D, TAG, makeLogStringWithLongInfo(message))
 
     fun logi(tag: String = TAG, message: String) = log(LEVEL.I, tag, message)
     fun logi(message: String) = log(LEVEL.I, TAG, message)
@@ -43,15 +43,49 @@ object LogUtil {
         }
     }
 
+    private fun makeLogStringWithLongInfo(vararg message: String): String {
+        val stackTrace =
+            Thread.currentThread().stackTrace[4]
+        val builder = StringBuilder()
+        appendTag(builder, stackTrace)
+        appendTraceInfo(builder, stackTrace)
+        for (i in message) {
+            builder.append(i)
+        }
+        return builder.toString()
+    }
+
+    private fun appendTag(
+        builder: StringBuilder,
+        stackTrace: StackTraceElement
+    ) {
+        builder.append('[')
+        builder.append(suppressFileExtension(stackTrace.fileName))
+        builder.append("] ")
+    }
+
+    private fun appendTraceInfo(
+        builder: StringBuilder,
+        stackTrace: StackTraceElement
+    ) {
+        builder.append(stackTrace.methodName)
+        builder.append(":")
+        builder.append(stackTrace.lineNumber)
+        builder.append(" ")
+    }
+
+    private fun suppressFileExtension(filename: String): String {
+        val extensionPosition = filename.lastIndexOf('.')
+        return if (extensionPosition > 0 && extensionPosition < filename.length) {
+            filename.substring(0, extensionPosition)
+        } else {
+            filename
+        }
+    }
 
 
 
-
-
-
-
-
-    fun debugInfo(tag: String?, msg: String) {
+    fun debugInfo(tag: String, msg: String) {
         if (!IS_DEBUG || TextUtils.isEmpty(msg)) {
             return
         }
@@ -65,7 +99,7 @@ object LogUtil {
         )
     }
 
-    fun warnInfo(tag: String?, msg: String) {
+    fun warnInfo(tag: String, msg: String) {
         if (!IS_DEBUG || TextUtils.isEmpty(msg)) {
             return
         }
@@ -85,7 +119,7 @@ object LogUtil {
      * @param tag 标签
      * @param msg 日志内容
      */
-    fun debugLongInfo(tag: String?, msg: String) {
+    fun debugLongInfo(tag: String, msg: String) {
         var msg = msg
         if (!IS_DEBUG || TextUtils.isEmpty(msg)) {
             return
