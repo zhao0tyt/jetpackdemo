@@ -3,7 +3,6 @@ package com.example.jetpackdemo.data.repository
 import com.example.jetpackdemo.data.dao.AppDatabase
 import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.data.network.Network
-import com.example.jetpackdemo.data.network.RequestStateCallback
 import com.zzq.common.ext.util.shouldUpdate
 import com.zzq.common.util.LogUtil
 import kotlinx.coroutines.Dispatchers
@@ -25,18 +24,12 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
     }
 
     // Integral
-    suspend fun getIntegral(userId: String, callback: RequestStateCallback): IntegralResponse {
+    suspend fun getIntegral(userId: String): IntegralResponse {
         var integralResponse = getIntegralFromDb(userId)
         if (integralResponse == null || integralResponse.mLastTime.shouldUpdate()) {
-            val response = getIntegralFromNetWork()
-            if (response.isSucces()) {
-                integralResponse = response.data
-                integralResponse.mLastTime = System.currentTimeMillis()
-                insertIntegral(integralResponse)
-                callback.success()
-            } else {
-                callback.failed(RequestStateCallback.ErrorType.HTTP)
-            }
+            integralResponse = getIntegralFromNetWork().data
+            integralResponse.mLastTime = System.currentTimeMillis()
+            insertIntegral(integralResponse)
         }
         return integralResponse
     }
