@@ -5,21 +5,17 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.jetpackdemo.R
-import com.example.jetpackdemo.data.model.IntegralResponse
+import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.data.network.RequestStateCallback
 import com.example.jetpackdemo.data.network.RequestStateCallback.*
 import com.example.jetpackdemo.databinding.FragmentMeBinding
-import com.example.jetpackdemo.ext.init
 import com.example.jetpackdemo.ext.jumpByLogin
 import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.util.InjectorUtil
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.nav
 import com.zzq.common.ext.navigateAction
-import com.zzq.common.ext.parseState
 import com.zzq.common.ext.util.notNull
-import com.zzq.common.util.LogUtil
-import kotlinx.android.synthetic.main.fragment_me.*
 
 class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>(), RequestStateCallback{
 

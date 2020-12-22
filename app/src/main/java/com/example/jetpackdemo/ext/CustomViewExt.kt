@@ -11,10 +11,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.ui.home.HomeFragment
 import com.example.jetpackdemo.ui.me.MeFragment
-import com.example.jetpackdemo.ui.official.OfficialFragment
+import com.example.jetpackdemo.ui.officialaccount.OfficialAccountFragment
 import com.example.jetpackdemo.ui.project.ProjectFragment
 import com.example.jetpackdemo.ui.square.SquareFragment
-import com.example.jetpackdemo.util.SettingUtil
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 
 fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
@@ -35,7 +34,7 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
                     return SquareFragment()
                 }
                 3 -> {
-                    return OfficialFragment()
+                    return OfficialAccountFragment()
                 }
                 4 -> {
                     return MeFragment()

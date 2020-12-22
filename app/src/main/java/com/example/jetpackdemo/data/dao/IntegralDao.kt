@@ -1,7 +1,7 @@
 package com.example.jetpackdemo.data.dao
 
 import androidx.room.*
-import com.example.jetpackdemo.data.model.IntegralResponse
+import com.example.jetpackdemo.data.bean.IntegralResponse
 
 @Dao
 interface IntegralDao {

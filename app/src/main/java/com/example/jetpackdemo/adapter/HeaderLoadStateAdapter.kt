@@ -31,5 +31,4 @@ class HeadLoadStateViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder
     fun bindTo(loadState: LoadState) {
         successMsg.isVisible = loadState is LoadState.Loading
     }
-
 }

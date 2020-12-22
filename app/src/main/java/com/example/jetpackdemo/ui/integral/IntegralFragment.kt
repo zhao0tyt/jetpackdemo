@@ -2,9 +2,7 @@ package com.example.jetpackdemo.ui.integral
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.adapter.FooterLoadStateAdapter
 import com.example.jetpackdemo.adapter.HeaderLoadStateAdapter
-import com.example.jetpackdemo.data.model.IntegralResponse
-import com.example.jetpackdemo.data.network.RequestStateCallback
+import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.databinding.FragmentIntegralBinding
 import com.example.jetpackdemo.ext.init
 import com.example.jetpackdemo.ui.base.BaseFragment
@@ -27,7 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 
-class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(), RequestStateCallback{
+class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
     private var rank: IntegralResponse? = null
 
     private val integralAdapter: IntegralAdapter by lazy{
@@ -91,11 +88,5 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(),
                 .collect{ recyclerView.scrollToPosition(0) }
         }
 
-    }
-
-    override fun success() {
-    }
-
-    override fun failed(type: RequestStateCallback.ErrorType) {
     }
 }

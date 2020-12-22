@@ -1,7 +1,6 @@
-package com.example.jetpackdemo.data.model
+package com.example.jetpackdemo.data.bean
 
 import android.os.Parcelable
-import androidx.room.Entity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

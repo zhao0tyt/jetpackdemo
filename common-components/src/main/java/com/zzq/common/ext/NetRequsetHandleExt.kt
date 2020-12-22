@@ -312,6 +312,7 @@ fun BaseViewModel.request(block: suspend () -> Unit, error: suspend (Throwable) 
     try {
         block()
     } catch (e: Throwable) {
+        LogUtil.loge(e.message!!)
         error(e)
     }
 }

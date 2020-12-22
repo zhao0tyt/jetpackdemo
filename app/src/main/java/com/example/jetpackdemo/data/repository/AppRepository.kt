@@ -1,7 +1,7 @@
 package com.example.jetpackdemo.data.repository
 
 import com.example.jetpackdemo.data.dao.AppDatabase
-import com.example.jetpackdemo.data.model.IntegralResponse
+import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.data.network.Network
 import com.example.jetpackdemo.data.network.RequestStateCallback
 import com.zzq.common.ext.util.shouldUpdate
@@ -24,6 +24,7 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
         response
     }
 
+    // Integral
     suspend fun getIntegral(userId: String, callback: RequestStateCallback): IntegralResponse {
         var integralResponse = getIntegralFromDb(userId)
         if (integralResponse == null || integralResponse.mLastTime.shouldUpdate()) {
@@ -39,28 +40,45 @@ class AppRepository(private val appDatabase: AppDatabase, private val network: N
         }
         return integralResponse
     }
-
     suspend fun getIntegralFromNetWork() = withContext(Dispatchers.IO) {
         LogUtil.logd("getIntegralFromNetWork")
         var response = network.getIntegral()
         response
     }
-
     suspend fun getIntegralFromDb(userId: String) = withContext(Dispatchers.IO) {
         LogUtil.logd("getIntegralFromDb")
         var response = appDatabase.integralDao().getIntegral(userId)
         response
     }
-
     suspend fun insertIntegral(data: IntegralResponse) = withContext(Dispatchers.IO) {
         LogUtil.logd("insertIntegral")
         integraldao.insert(data)
     }
-
     suspend fun getIntegralRank(page: Int) = withContext(Dispatchers.IO) {
         val response = network.getIntegralRank(page)
         response
     }
+
+    //Official Account
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     companion object {
 

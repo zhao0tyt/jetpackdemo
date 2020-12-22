@@ -1,18 +1,11 @@
 package com.example.jetpackdemo.ui.integral
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.example.jetpackdemo.data.model.ApiPagerResponse
-import com.example.jetpackdemo.data.model.IntegralResponse
+import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.data.repository.AppRepository
 import com.zzq.common.base.viewmodel.BaseViewModel
-import com.zzq.common.ext.request
-import com.zzq.common.state.ResultState
-import com.zzq.common.util.LogUtil
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.onEmpty
 
 
 class IntegralViewModel(private val repository: AppRepository ): BaseViewModel() {

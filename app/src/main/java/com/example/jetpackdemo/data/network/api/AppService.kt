@@ -1,9 +1,6 @@
 package com.example.jetpackdemo.data.network.api
 
-import com.example.jetpackdemo.data.model.ApiPagerResponse
-import com.example.jetpackdemo.data.model.ApiResponse
-import com.example.jetpackdemo.data.model.IntegralResponse
-import com.example.jetpackdemo.data.model.UserInfo
+import com.example.jetpackdemo.data.bean.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -41,5 +38,11 @@ interface AppService {
      */
     @GET("coin/rank/{page}/json")
     fun getIntegralRank(@Path("page") page: Int): Call<ApiResponse<ApiPagerResponse<ArrayList<IntegralResponse>>>>
+
+    /**
+     * 公众号分类
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getOfficialAccountTitle(): Call<ApiResponse<ArrayList<ClassifyResponse>>>
 }
 

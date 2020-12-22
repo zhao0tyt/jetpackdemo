@@ -23,12 +23,14 @@ class Network {
 
     suspend fun getIntegralRank(page: Int) = appService.getIntegralRank(page).await()
 
+    suspend fun getOfficialAccountTitle() = appService.getOfficialAccountTitle().await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onFailure(call: Call<T>, t: Throwable) {
                     LogUtil.logd("coroutines request failed")
-//                    continuation.resumeWithException(t)
+                    continuation.resumeWithException(t)
                 }
 
                 override fun onResponse(call: Call<T>, response: Response<T>) {

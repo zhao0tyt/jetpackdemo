@@ -1,19 +1,15 @@
 package com.example.jetpackdemo.ui.integral
 
 import androidx.paging.PagingSource
-import com.example.jetpackdemo.data.model.IntegralResponse
-import com.example.jetpackdemo.data.network.RequestStateCallback
+import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.data.repository.AppRepository
 import com.zzq.common.util.LogUtil
-import kotlinx.coroutines.flow.callbackFlow
-import retrofit2.HttpException
 
 
 class IntegralPagingSource(private val appRepository: AppRepository): PagingSource<Int, IntegralResponse>(){
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, IntegralResponse> {
         return try {
-
             // Api接口是从第一页开始获取数据
             // 如果key是null，那就加载第1页的数据
             val page = params.key ?: 1
@@ -28,7 +24,7 @@ class IntegralPagingSource(private val appRepository: AppRepository): PagingSour
                 nextKey = if (!response.data.hasMore()) null else page + 1
             )
         } catch (e: Exception){
-            LoadResult.Error(e)
+            LoadResult.Error(throwable = e)
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.NetworkUtils
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.databinding.RecyclerviewFooterBinding
 import com.example.jetpackdemo.ui.integral.IntegralAdapter
@@ -38,7 +39,12 @@ class FootLoadStateViewHolder(parent: ViewGroup, private val retryCallback: () -
         progressBar.isVisible = loadState is LoadState.Loading
         retry.isVisible = loadState is LoadState.Error
         errorMsg.isVisible = !(loadState as? LoadState.Error)?.error?.message.isNullOrBlank()
-        errorMsg.text = (loadState as? LoadState.Error)?.error?.message
+//        errorMsg.text = (loadState as? LoadState.Error)?.error?.message
+        if (!NetworkUtils.isConnected()) {
+            errorMsg.text = "网络连接异常，请检查网络设置"
+        } else {
+            errorMsg.text = "获取数据失败，请重试"
+        }
     }
 
 }

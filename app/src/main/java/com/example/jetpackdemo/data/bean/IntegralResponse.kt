@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.data.model
+package com.example.jetpackdemo.data.bean
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
