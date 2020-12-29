@@ -8,7 +8,7 @@ import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.requestNoCheck
 import com.zzq.common.state.ResultState
 
-class MeViewModel(private val repository: AppRepository)  : BaseViewModel(){
+class MeViewModel(private val repository: AppRepository): BaseViewModel(){
 
     var name = MutableLiveData<String>("请先登录~")
     var integral = MutableLiveData<String>("0")

@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-@Entity(tableName = "Integral")
+@Entity(tableName = "integral")
 data class IntegralResponse(
     var coinCount: String,//当前积分
     var rank: String,

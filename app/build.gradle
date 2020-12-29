@@ -91,6 +91,8 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.30.5'
     //指示器库
     implementation 'com.github.hackware1993:MagicIndicator:1.7.0'
+    //UI框架
+    implementation 'com.github.xuexiangjys:XUI:1.1.5'
 
 }
 

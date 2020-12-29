@@ -8,7 +8,7 @@ import com.example.jetpackdemo.data.repository.AppRepository
 import com.zzq.common.base.viewmodel.BaseViewModel
 
 
-class IntegralViewModel(private val repository: AppRepository ): BaseViewModel() {
+class IntegralViewModel(private val repository: AppRepository): BaseViewModel() {
 
     var rank = MutableLiveData<IntegralResponse>()
 

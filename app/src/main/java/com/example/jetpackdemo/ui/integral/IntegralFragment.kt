@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +18,10 @@ import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.util.InjectorUtil
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.util.notNull
+import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_integral.*
 import kotlinx.android.synthetic.main.include_recyclerview.*
+import kotlinx.android.synthetic.main.recyclerview_footer.view.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -37,6 +40,9 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
 
     override fun layoutId() = R.layout.fragment_integral
     override fun initView(savedInstanceState: Bundle?) {
+        LogUtil.logd("initView")
+        statefulLayout.showLoading()
+
         mDatabind.vm = viewModel
         rank = arguments?.getParcelable("rank")
         rank.notNull({
@@ -48,8 +54,6 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
         recyclerView.layoutManager = LinearLayoutManager(context)
         // Adapter初始化
         initAdapter(recyclerView)
-
-
 
         // SwipeRefreshLayout初始化
         swipeRefresh.init {
@@ -73,11 +77,14 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
             footer = FooterLoadStateAdapter(integralAdapter)
         )
 
-        lifecycleScope.launchWhenCreated {
-            integralAdapter.loadStateFlow.collectLatest { loadStates ->
-                swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
-            }
-        }
+//        lifecycleScope.launchWhenCreated {
+//            integralAdapter.loadStateFlow.collectLatest { loadStates ->
+//                swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
+//                if (loadStates.append is LoadState.Loading) {
+//                    statefulLayout.showContent()
+//                }
+//            }
+//        }
 
         lifecycleScope.launchWhenCreated {
             integralAdapter.loadStateFlow
@@ -88,5 +95,31 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
                 .collect{ recyclerView.scrollToPosition(0) }
         }
 
+        integralAdapter.addLoadStateListener { combinedLoadStates ->
+            LogUtil.logd("loadstate = "+combinedLoadStates.toString())
+
+            when(combinedLoadStates.refresh){
+                is LoadState.Loading -> {
+                    swipeRefresh.isRefreshing = true
+                    statefulLayout.showLoading()
+                }
+                is LoadState.Error -> statefulLayout.showError {
+                    integralAdapter.refresh()
+                }
+
+
+                else -> {
+                    swipeRefresh.isRefreshing = false
+                    statefulLayout.showContent()
+                }
+            }
+
+            when(combinedLoadStates.append){
+                LoadState.Loading -> statefulLayout.showContent()
+
+            }
+
+        }
     }
+
 }

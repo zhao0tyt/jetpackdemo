@@ -2,6 +2,8 @@ package com.example.jetpackdemo.data.bean
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -16,4 +18,6 @@ data class ClassifyResponse(var children: List<String> = listOf(),
                             var order: Int = 0,
                             var parentChapterId: Int = 0,
                             var userControlSetTop: Boolean = false,
-                            var visible: Int = 0) : Parcelable
+                            var visible: Int = 0,
+                            //后添加为了计算更新间隔时间
+                            var mLastTime: Long) : Parcelable

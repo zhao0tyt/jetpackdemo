@@ -5,15 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.jetpackdemo.data.bean.IntegralResponse
+import com.example.jetpackdemo.data.bean.ListClassifyResponse
 
 @Database(entities = [
-    IntegralResponse::class
+    IntegralResponse::class,
+    ListClassifyResponse::class
 ], version = 1)
 abstract class AppDatabase : RoomDatabase()  {
 
     abstract fun integralDao(): IntegralDao
+    abstract fun officialAccountTitleDao(): OfficialAccountTitleDao
 
     companion object {
+        val OFFICIAL_ACCOUNT_TITLE = "official_account_title"
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile

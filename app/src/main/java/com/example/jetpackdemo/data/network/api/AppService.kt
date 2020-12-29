@@ -43,6 +43,6 @@ interface AppService {
      * 公众号分类
      */
     @GET("wxarticle/chapters/json")
-    suspend fun getOfficialAccountTitle(): Call<ApiResponse<ArrayList<ClassifyResponse>>>
+    fun getOfficialAccountTitle(): Call<ApiResponse<ArrayList<ClassifyResponse>>>
 }
 

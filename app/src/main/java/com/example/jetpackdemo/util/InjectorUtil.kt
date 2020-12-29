@@ -8,6 +8,7 @@ import com.example.jetpackdemo.ui.integral.IntegralModelFactory
 import com.example.jetpackdemo.ui.login.viewmodel.LoginModelFactory
 import com.example.jetpackdemo.ui.login.viewmodel.RegisterModelFactory
 import com.example.jetpackdemo.ui.me.MeModelFactory
+import com.example.jetpackdemo.ui.officialaccount.OfficialAccountModelFactory
 
 object InjectorUtil {
     private fun getAppRepository(context: Context) = AppRepository.getInstance(AppDatabase.getDatabase(context), Network.getInstance())
@@ -19,4 +20,6 @@ object InjectorUtil {
     fun getMeViewModelFactory(context: Context) = MeModelFactory(getAppRepository(context))
 
     fun getIntegralViewModelFactory(context: Context) = IntegralModelFactory(getAppRepository(context))
+
+    fun getOfficialAccountViewModelFactory(context: Context) = OfficialAccountModelFactory(getAppRepository(context))
 }
