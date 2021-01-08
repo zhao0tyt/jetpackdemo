@@ -54,6 +54,10 @@ class AppRepository(appDatabase: AppDatabase, private val network: Network) {
         val response = network.getIntegralRank(page)
         response
     }
+    suspend fun getIntegralHistory(page: Int) = withContext(Dispatchers.IO) {
+        val response = network.getIntegralHistory(page)
+        response
+    }
 
     //Official Account
     suspend fun getOfficialAccountTitle(): ArrayList<ClassifyResponse> {

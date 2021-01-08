@@ -23,6 +23,8 @@ class Network {
 
     suspend fun getIntegralRank(page: Int) = appService.getIntegralRank(page).await()
 
+    suspend fun getIntegralHistory(page: Int) = appService.getIntegralHistory(page).await()
+
     suspend fun getOfficialAccountTitle() = appService.getOfficialAccountTitle().await()
 
     private suspend fun <T> Call<T>.await(): T {

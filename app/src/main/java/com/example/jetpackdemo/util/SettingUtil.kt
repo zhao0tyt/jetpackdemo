@@ -1,5 +1,10 @@
 package com.example.jetpackdemo.util
 
+import android.content.Context
+import android.graphics.Color
+import android.preference.PreferenceManager
+import androidx.core.content.ContextCompat
+import com.example.jetpackdemo.R
 import com.tencent.mmkv.MMKV
 
 object SettingUtil {

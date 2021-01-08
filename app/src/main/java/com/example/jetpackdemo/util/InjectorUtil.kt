@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.jetpackdemo.data.dao.AppDatabase
 import com.example.jetpackdemo.data.network.Network
 import com.example.jetpackdemo.data.repository.AppRepository
+import com.example.jetpackdemo.ui.integral.IntegralHistoryModelFactory
 import com.example.jetpackdemo.ui.integral.IntegralModelFactory
 import com.example.jetpackdemo.ui.login.viewmodel.LoginModelFactory
 import com.example.jetpackdemo.ui.login.viewmodel.RegisterModelFactory
@@ -20,6 +21,8 @@ object InjectorUtil {
     fun getMeViewModelFactory(context: Context) = MeModelFactory(getAppRepository(context))
 
     fun getIntegralViewModelFactory(context: Context) = IntegralModelFactory(getAppRepository(context))
+
+    fun getIntegralHistoryViewModelFactory(context: Context) = IntegralHistoryModelFactory(getAppRepository(context))
 
     fun getOfficialAccountViewModelFactory(context: Context) = OfficialAccountModelFactory(getAppRepository(context))
 }

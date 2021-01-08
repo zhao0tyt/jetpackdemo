@@ -14,6 +14,7 @@ import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.getVmClazz
 import com.zzq.common.network.manager.NetState
 import com.zzq.common.network.manager.NetworkStateManager
+import com.zzq.common.util.LogUtil
 
 abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
@@ -34,16 +35,19 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        LogUtil.logd("onCreateView")
         return inflater.inflate(layoutId(), container, false)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        LogUtil.logd("onAttach")
         mActivity = context as AppCompatActivity
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        LogUtil.logd("onViewCreated")
         isFirst = true
         mViewModel = createViewModel()
         initView(savedInstanceState)
@@ -82,6 +86,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        LogUtil.logd("onResume")
         onVisible()
     }
 

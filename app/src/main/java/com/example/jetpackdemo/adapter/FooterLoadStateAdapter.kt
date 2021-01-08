@@ -1,3 +1,4 @@
+/*
 package com.example.jetpackdemo.adapter
 
 import android.view.LayoutInflater
@@ -47,4 +48,4 @@ class FootLoadStateViewHolder(parent: ViewGroup, private val retryCallback: () -
         }
     }
 
-}
+}*/
