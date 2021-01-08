@@ -5,7 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
+import com.zzq.common.navigation.NavHostFragment
+
 
 fun Fragment.nav(): NavController {
     return NavHostFragment.findNavController(this)

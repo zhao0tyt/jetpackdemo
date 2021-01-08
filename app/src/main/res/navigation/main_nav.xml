@@ -76,11 +76,36 @@
         android:id="@+id/integralFragment"
         android:name="com.example.jetpackdemo.ui.integral.IntegralFragment"
         android:label="IntegralFragment"
-        tools:layout="@layout/fragment_integral" />
+        tools:layout="@layout/fragment_integral">
+        <action
+            android:id="@+id/action_integralFragment_to_integralHistoryFragment"
+            app:destination="@id/integralHistoryFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/integralHistoryFragment"
+        android:name="com.example.jetpackdemo.ui.integral.IntegralHistoryFragment"
+        android:label="IntegralHistoryFragment" />
+
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.example.jetpackdemo.ui.WebFragment"
+        android:label="WebFragment" />
 
     <action
         android:id="@+id/action_to_loginFragment"
         app:destination="@id/loginFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
+        android:id="@+id/action_to_webFragment"
+        app:destination="@id/webFragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"

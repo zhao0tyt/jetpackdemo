@@ -24,7 +24,6 @@ class OfficialAccountFragment : BaseFragment<BaseViewModel, FragmentViewpagerBin
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-
     }
 
     override fun lazyLoadData() {

@@ -40,6 +40,12 @@ interface AppService {
     fun getIntegralRank(@Path("page") page: Int): Call<ApiResponse<ApiPagerResponse<ArrayList<IntegralResponse>>>>
 
     /**
+     * 获取积分历史
+     */
+    @GET("lg/coin/list/{page}/json")
+    fun getIntegralHistory(@Path("page") page: Int): Call<ApiResponse<ApiPagerResponse<ArrayList<IntegralHistoryResponse>>>>
+
+    /**
      * 公众号分类
      */
     @GET("wxarticle/chapters/json")

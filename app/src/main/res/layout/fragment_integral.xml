@@ -17,17 +17,22 @@
 
         <include layout="@layout/toolbar" />
 
-        <com.xuexiang.xui.widget.statelayout.StatefulLayout
-            android:id="@+id/statefulLayout"
+        <include
+            layout="@layout/include_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"/>
+<!--        <com.xuexiang.xui.widget.statelayout.StatefulLayout-->
+<!--            android:id="@+id/statefulLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="1">-->
 
-            <include
-                layout="@layout/include_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.xuexiang.xui.widget.statelayout.StatefulLayout>
+<!--            <include-->
+<!--                layout="@layout/include_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
+<!--        </com.xuexiang.xui.widget.statelayout.StatefulLayout>-->
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

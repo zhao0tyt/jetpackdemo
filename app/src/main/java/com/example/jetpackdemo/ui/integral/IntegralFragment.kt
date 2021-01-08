@@ -1,37 +1,42 @@
 package com.example.jetpackdemo.ui.integral
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.jetpackdemo.R
-import com.example.jetpackdemo.adapter.FooterLoadStateAdapter
-import com.example.jetpackdemo.adapter.HeaderLoadStateAdapter
 import com.example.jetpackdemo.data.bean.IntegralResponse
 import com.example.jetpackdemo.databinding.FragmentIntegralBinding
-import com.example.jetpackdemo.ext.init
+import com.example.jetpackdemo.ext.*
 import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.util.InjectorUtil
+import com.kingja.loadsir.core.LoadService
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.ClassicsHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.zzq.common.base.viewmodel.BaseViewModel
+import com.zzq.common.ext.nav
+import com.zzq.common.ext.navigateAction
 import com.zzq.common.ext.util.notNull
 import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_integral.*
 import kotlinx.android.synthetic.main.include_recyclerview.*
-import kotlinx.android.synthetic.main.recyclerview_footer.view.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
+import kotlinx.android.synthetic.main.toolbar.*
+
 
 class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
     private var rank: IntegralResponse? = null
+    private val INTEGRAL_RULE_URL = "https://www.wanandroid.com/blog/show/2653"
+    private val INTEGRAL_RULE_KEY = "integral_rule"
+    private lateinit var smartRefreshLayout: SmartRefreshLayout
+    //界面状态管理者
+    private lateinit var loadsir: LoadService<Any>
 
-    private val integralAdapter: IntegralAdapter by lazy{
-        IntegralAdapter()
+    private val mAdapter: IntegralAdapter by lazy{
+        IntegralAdapter(arrayListOf())
     }
 
     private val viewModel: IntegralViewModel by viewModels {
@@ -40,9 +45,6 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
 
     override fun layoutId() = R.layout.fragment_integral
     override fun initView(savedInstanceState: Bundle?) {
-        LogUtil.logd("initView")
-        statefulLayout.showLoading()
-
         mDatabind.vm = viewModel
         rank = arguments?.getParcelable("rank")
         rank.notNull({
@@ -50,76 +52,56 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
         }, {
             integral_cardview.visibility = View.GONE
         })
+        //Toolbar初始化
+        toolbar.initClose("积分榜") {
+            nav().navigateUp()
+        }.run {
+            inflateMenu(R.menu.integral_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.integral_rule -> {
+                        nav().navigateAction(R.id.action_to_webFragment,
+                            Bundle().apply {
+                                putString(INTEGRAL_RULE_KEY, INTEGRAL_RULE_URL)
+                            })
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        // Adapter初始化
-        initAdapter(recyclerView)
+                    }
+                    R.id.integral_history -> nav().navigateAction(R.id.action_integralFragment_to_integralHistoryFragment)
 
-        // SwipeRefreshLayout初始化
-        swipeRefresh.init {
-            integralAdapter.refresh()
+                }
+                true
+            }
+
         }
 
+        // RecyclerView初始化
+        recyclerView.init(LinearLayoutManager(context), mAdapter)
+
+        // SmartRefreshLayout初始化
+        smartRefreshLayout = srl.init(ClassicsHeader(context),ClassicsFooter(context),{
+            viewModel.getIntegralRank(true)
+        },{
+            viewModel.getIntegralRank(false)
+        })
+
+        //状态页配置
+        loadsir = loadServiceInit(smartRefreshLayout) {
+            LogUtil.logd("loadServiceInit")
+            //点击重试时触发的操作
+            loadsir.showLoading()
+            viewModel.getIntegralRank(true)
+        }
     }
 
     override fun lazyLoadData() {
-        lifecycleScope.launchWhenCreated(){
-            viewModel.getIntegralRankPager().collectLatest {
-                integralAdapter.submitData(it)
-            }
-        }
-
+        LogUtil.logd("lazyLoadData")
+        loadsir.showLoading()
+        viewModel.getIntegralRank(true)
     }
 
-    private fun initAdapter(rl: RecyclerView) {
-        rl.adapter = integralAdapter.withLoadStateHeaderAndFooter(
-            header = HeaderLoadStateAdapter(),
-            footer = FooterLoadStateAdapter(integralAdapter)
-        )
-
-//        lifecycleScope.launchWhenCreated {
-//            integralAdapter.loadStateFlow.collectLatest { loadStates ->
-//                swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
-//                if (loadStates.append is LoadState.Loading) {
-//                    statefulLayout.showContent()
-//                }
-//            }
-//        }
-
-        lifecycleScope.launchWhenCreated {
-            integralAdapter.loadStateFlow
-                // Only emit when REFRESH LoadState for RemoteMediator changes.
-                .distinctUntilChangedBy { it.refresh }
-                // Only react to cases where Remote REFRESH completes i.e., NotLoading.
-                .filter { it.refresh is LoadState.NotLoading }
-                .collect{ recyclerView.scrollToPosition(0) }
-        }
-
-        integralAdapter.addLoadStateListener { combinedLoadStates ->
-            LogUtil.logd("loadstate = "+combinedLoadStates.toString())
-
-            when(combinedLoadStates.refresh){
-                is LoadState.Loading -> {
-                    swipeRefresh.isRefreshing = true
-                    statefulLayout.showLoading()
-                }
-                is LoadState.Error -> statefulLayout.showError {
-                    integralAdapter.refresh()
-                }
-
-
-                else -> {
-                    swipeRefresh.isRefreshing = false
-                    statefulLayout.showContent()
-                }
-            }
-
-            when(combinedLoadStates.append){
-                LoadState.Loading -> statefulLayout.showContent()
-
-            }
-
-        }
+    override fun createObserver() {
+        viewModel.integralDataState.observe(viewLifecycleOwner, Observer {
+            loadListData(it, mAdapter, loadsir, smartRefreshLayout)
+        })
     }
-
 }
