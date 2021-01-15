@@ -25,4 +25,6 @@ object InjectorUtil {
     fun getIntegralHistoryViewModelFactory(context: Context) = IntegralHistoryModelFactory(getAppRepository(context))
 
     fun getOfficialAccountViewModelFactory(context: Context) = OfficialAccountModelFactory(getAppRepository(context))
+
+    fun getOfficialChildViewModelFactory(context: Context) = OfficialAccountModelFactory(getAppRepository(context))
 }

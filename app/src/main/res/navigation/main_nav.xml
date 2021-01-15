@@ -110,4 +110,16 @@
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right" />
+
+    <fragment
+        android:id="@+id/OfficialAccountChildFragment"
+        android:name="com.example.jetpackdemo.ui.officialaccount.OfficialAccountChildFragment"
+        android:label="WebFragment" />
+    <action
+        android:id="@+id/action_to_OfficialAccountChildFragment"
+        app:destination="@id/OfficialAccountChildFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 </navigation>

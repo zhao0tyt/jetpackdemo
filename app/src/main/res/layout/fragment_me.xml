@@ -274,7 +274,8 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:onClick="@{()->click.about()}">
 
             <ImageView
                 android:id="@+id/iv_kaiyuan"

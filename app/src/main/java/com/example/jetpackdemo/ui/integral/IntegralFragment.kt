@@ -1,8 +1,6 @@
 package com.example.jetpackdemo.ui.integral
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,15 +12,13 @@ import com.example.jetpackdemo.ext.*
 import com.example.jetpackdemo.ui.base.BaseFragment
 import com.example.jetpackdemo.util.InjectorUtil
 import com.kingja.loadsir.core.LoadService
-import com.scwang.smart.refresh.footer.ClassicsFooter
-import com.scwang.smart.refresh.header.ClassicsHeader
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.nav
 import com.zzq.common.ext.navigateAction
 import com.zzq.common.ext.util.notNull
 import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_integral.*
+import kotlinx.android.synthetic.main.include_list.*
 import kotlinx.android.synthetic.main.include_recyclerview.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -31,7 +27,6 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
     private var rank: IntegralResponse? = null
     private val INTEGRAL_RULE_URL = "https://www.wanandroid.com/blog/show/2653"
     private val INTEGRAL_RULE_KEY = "integral_rule"
-    private lateinit var smartRefreshLayout: SmartRefreshLayout
     //界面状态管理者
     private lateinit var loadsir: LoadService<Any>
 
@@ -59,14 +54,17 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
             inflateMenu(R.menu.integral_menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {
+                    //跳转到积分规则页面
                     R.id.integral_rule -> {
                         nav().navigateAction(R.id.action_to_webFragment,
                             Bundle().apply {
                                 putString(INTEGRAL_RULE_KEY, INTEGRAL_RULE_URL)
                             })
-
                     }
-                    R.id.integral_history -> nav().navigateAction(R.id.action_integralFragment_to_integralHistoryFragment)
+                    //跳转到积分历史页面
+                    R.id.integral_history -> {
+                        nav().navigateAction(R.id.action_integralFragment_to_integralHistoryFragment)
+                    }
 
                 }
                 true
@@ -74,18 +72,22 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
 
         }
 
-        // RecyclerView初始化
-        recyclerView.init(LinearLayoutManager(context), mAdapter)
-
-        // SmartRefreshLayout初始化
-        smartRefreshLayout = srl.init(ClassicsHeader(context),ClassicsFooter(context),{
-            viewModel.getIntegralRank(true)
-        },{
+        mAdapter.loadMoreModule.setOnLoadMoreListener {
             viewModel.getIntegralRank(false)
-        })
+        }
+        // RecyclerView初始化
+        recyclerView.init(LinearLayoutManager(context), mAdapter).run {
+            this.initFloatBtn(floatbtn)
+        }
+
+        //初始化 SwipeRefreshLayout
+        swipeRefreshLayout.init {
+            //触发刷新监听时请求数据
+            viewModel.getIntegralRank(true)
+        }
 
         //状态页配置
-        loadsir = loadServiceInit(smartRefreshLayout) {
+        loadsir = loadServiceInit(swipeRefreshLayout) {
             LogUtil.logd("loadServiceInit")
             //点击重试时触发的操作
             loadsir.showLoading()
@@ -101,7 +103,7 @@ class IntegralFragment : BaseFragment<BaseViewModel, FragmentIntegralBinding>(){
 
     override fun createObserver() {
         viewModel.integralDataState.observe(viewLifecycleOwner, Observer {
-            loadListData(it, mAdapter, loadsir, smartRefreshLayout)
+            loadListData(it, mAdapter, loadsir, swipeRefreshLayout)
         })
     }
 }

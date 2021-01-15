@@ -1,13 +1,15 @@
 package com.example.jetpackdemo.ui.integral
 
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.bean.IntegralHistoryResponse
 import com.example.jetpackdemo.util.DatetimeUtil
 
-class IntegralHistoryAdapter(data: ArrayList<IntegralHistoryResponse>) : BaseQuickAdapter<IntegralHistoryResponse, BaseViewHolder>(
-    R.layout.item_integral_history, data) {
+class IntegralHistoryAdapter(data: ArrayList<IntegralHistoryResponse>) :
+    BaseQuickAdapter<IntegralHistoryResponse, BaseViewHolder>(R.layout.item_integral_history, data),
+    LoadMoreModule {
 
     override fun convert(holder: BaseViewHolder, item: IntegralHistoryResponse) {
         //赋值

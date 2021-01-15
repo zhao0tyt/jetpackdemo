@@ -27,6 +27,8 @@ class Network {
 
     suspend fun getOfficialAccountTitle() = appService.getOfficialAccountTitle().await()
 
+    suspend fun getPublicData(page: Int, id: Int) = appService.getPublicData(page, id).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

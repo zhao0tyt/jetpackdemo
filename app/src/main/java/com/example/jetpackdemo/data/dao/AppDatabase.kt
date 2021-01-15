@@ -17,7 +17,7 @@ abstract class AppDatabase : RoomDatabase()  {
     abstract fun officialAccountTitleDao(): OfficialAccountTitleDao
 
     companion object {
-        val OFFICIAL_ACCOUNT_TITLE = "official_account_title"
+        val OFFICIAL_ACCOUNT = "official_account"
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
