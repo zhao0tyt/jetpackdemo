@@ -69,7 +69,7 @@ class AppRepository(appDatabase: AppDatabase, private val network: Network) {
         if (listClassifyResponse == null || listClassifyResponse.mLastTime.shouldUpdate()) {
             response = getOfficialAccountTitleFromNetWork().data
             //创建一个listDataResponse并插入数据库
-            listClassifyResponse = ListClassifyResponse(response, 1, AppDatabase.OFFICIAL_ACCOUNT_TITLE,
+            listClassifyResponse = ListClassifyResponse(response, 1, AppDatabase.OFFICIAL_ACCOUNT,
                 System.currentTimeMillis())
             insertOfficialAccountTitle(listClassifyResponse)
         }
@@ -82,7 +82,7 @@ class AppRepository(appDatabase: AppDatabase, private val network: Network) {
     }
     suspend fun getOfficialAccountTitleFromDb() = withContext(Dispatchers.IO) {
         LogUtil.logd("getOfficialAccountTitleFromNetDb")
-        var response = officialAccountTitleDao.getTitle(AppDatabase.OFFICIAL_ACCOUNT_TITLE)
+        var response = officialAccountTitleDao.getData(AppDatabase.OFFICIAL_ACCOUNT)
         response
     }
     suspend fun insertOfficialAccountTitle(data: ListClassifyResponse) = withContext(Dispatchers.IO) {
@@ -90,7 +90,12 @@ class AppRepository(appDatabase: AppDatabase, private val network: Network) {
         officialAccountTitleDao.insert(data)
     }
 
-
+    //获取公众号数据
+    suspend fun getPublicDataFromNet(page: Int, id: Int) = withContext(Dispatchers.IO) {
+        LogUtil.logd("getPublicDataFromNet")
+        var response = network.getPublicData(page, id)
+        response
+    }
 
 
 

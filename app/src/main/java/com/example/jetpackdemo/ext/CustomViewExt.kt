@@ -1,11 +1,17 @@
 package com.example.jetpackdemo.ext
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
+import android.graphics.Color
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -15,21 +21,25 @@ import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.bean.state.ListDataUiState
 import com.example.jetpackdemo.ui.home.HomeFragment
 import com.example.jetpackdemo.ui.me.MeFragment
+import com.example.jetpackdemo.ui.officialaccount.OfficialAccountChildFragment
 import com.example.jetpackdemo.ui.officialaccount.OfficialAccountFragment
 import com.example.jetpackdemo.ui.project.ProjectFragment
 import com.example.jetpackdemo.ui.square.SquareFragment
 import com.example.jetpackdemo.widget.EmptyCallback
 import com.example.jetpackdemo.widget.ErrorCallback
 import com.example.jetpackdemo.widget.LoadingCallback
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.scwang.smart.refresh.layout.api.RefreshFooter
-import com.scwang.smart.refresh.layout.api.RefreshHeader
-import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import com.zzq.common.util.LogUtil
-import kotlinx.android.synthetic.main.include_recyclerview.*
+import net.lucode.hackware.magicindicator.MagicIndicator
+import net.lucode.hackware.magicindicator.buildins.UIUtil
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView
 
 fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
     //是否可滑动
@@ -139,21 +149,112 @@ fun RecyclerView.init(
 }
 
 /**
- * SmartRefreshLayout
+ * FloatingActionButton
  */
-fun SmartRefreshLayout.init(
-    header: RefreshHeader,
-    footer: RefreshFooter,
-    onRefreshListener: () -> Unit,
-    OnLoadMoreListener: () -> Unit
-):SmartRefreshLayout {
-    this.run {
-        setRefreshHeader(header)
-        setRefreshFooter(footer)
-        setOnRefreshListener { onRefreshListener.invoke() }
-        setOnLoadMoreListener{OnLoadMoreListener.invoke()}
+fun RecyclerView.initFloatBtn(floatbtn: FloatingActionButton) {
+    //监听recyclerview滑动到顶部的时候，需要把向上返回顶部的按钮隐藏
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        @SuppressLint("RestrictedApi")
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (!canScrollVertically(-1)) {
+                floatbtn.visibility = View.INVISIBLE
+            } else {
+                floatbtn.visibility = View.VISIBLE
+            }
+        }
+    })
+    floatbtn.setOnClickListener {
+        val layoutManager = layoutManager as LinearLayoutManager
+        //如果当前recyclerview 最后一个视图位置的索引大于等于40，则迅速返回顶部，否则带有滚动动画效果返回到顶部
+        if (layoutManager.findLastVisibleItemPosition() >= 40) {
+            scrollToPosition(0)//没有动画迅速返回到顶部(马上)
+        } else {
+            smoothScrollToPosition(0)//有滚动动画返回到顶部(有点慢)
+        }
+    }
+}
+
+fun ViewPager2.init(
+    fragment: Fragment,
+    fragments: ArrayList<Fragment>,
+    isUserInputEnabled: Boolean = true
+): ViewPager2 {
+    //是否可滑动
+    this.isUserInputEnabled = isUserInputEnabled
+    //设置适配器
+    adapter = object : FragmentStateAdapter(fragment) {
+        override fun createFragment(position: Int) = fragments[position]
+        override fun getItemCount() = fragments.size
     }
     return this
+}
+
+fun MagicIndicator.bindViewPager2(
+    viewPager: ViewPager2,
+    mStringList: List<String> = arrayListOf(),
+    action: (index: Int) -> Unit = {}) {
+    val commonNavigator = CommonNavigator(context)
+    commonNavigator.adapter = object : CommonNavigatorAdapter() {
+
+        override fun getCount(): Int {
+            return  mStringList.size
+        }
+        override fun getTitleView(context: Context, index: Int): IPagerTitleView {
+            return ColorTransitionPagerTitleView(context).apply {
+                //设置文本
+                text = mStringList[index]
+                //字体大小
+                textSize = 17f
+                //未选中颜色
+                normalColor = Color.WHITE
+                //选中颜色
+                selectedColor = Color.WHITE
+                //点击事件
+                setOnClickListener {
+                    viewPager.currentItem = index
+                    action.invoke(index)
+                }
+            }
+        }
+        override fun getIndicator(context: Context): IPagerIndicator {
+            return LinePagerIndicator(context).apply {
+                mode = LinePagerIndicator.MODE_EXACTLY
+                //线条的宽高度
+                lineHeight = UIUtil.dip2px(context, 3.0).toFloat()
+                lineWidth = UIUtil.dip2px(context, 30.0).toFloat()
+                //线条的圆角
+                roundRadius = UIUtil.dip2px(context, 6.0).toFloat()
+                startInterpolator = AccelerateInterpolator()
+                endInterpolator = DecelerateInterpolator(2.0f)
+                //线条的颜色
+                setColors(Color.WHITE)
+            }
+        }
+    }
+    this.navigator = commonNavigator
+
+    viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            this@bindViewPager2.onPageSelected(position)
+            action.invoke(position)
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            this@bindViewPager2.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            this@bindViewPager2.onPageScrollStateChanged(state)
+        }
+    })
 }
 
 /**
@@ -210,8 +311,9 @@ fun <T> loadListData(
     data: ListDataUiState<T>,
     baseQuickAdapter: BaseQuickAdapter<T, *>,
     loadService: LoadService<*>,
-    smartRefreshLayout: SmartRefreshLayout
+    swipeRefreshLayout: SwipeRefreshLayout
 ) {
+    swipeRefreshLayout.isRefreshing = false
     if (data.isSuccess) {
         //成功
         when {
@@ -222,18 +324,20 @@ fun <T> loadListData(
             //是第一页
             data.isRefresh -> {
                 baseQuickAdapter.setList(data.listData)
-                LogUtil.logd("hasmore = "+data.hasMore)
-                smartRefreshLayout.finishRefresh(true)
                 loadService.showSuccess()
             }
             //不是第一页
             else -> {
                 baseQuickAdapter.addData(data.listData)
-                LogUtil.logd("hasmore = "+data.hasMore)
-                smartRefreshLayout.finishLoadMore(0,true, !data.hasMore)
                 loadService.showSuccess()
             }
         }
+        if (data.hasMore) {
+            baseQuickAdapter.loadMoreModule.loadMoreComplete()
+        } else {
+            baseQuickAdapter.loadMoreModule.loadMoreEnd()
+        }
+
     } else {
         //失败
         if (data.isRefresh) {
@@ -241,12 +345,9 @@ fun <T> loadListData(
                 //第一次加载出错，则显示错误界面
                 loadService.showError(data.errMessage)
             }
-            LogUtil.logd("hasmore = "+data.hasMore)
-            smartRefreshLayout.finishRefresh(false)
         } else {
             //加载更多时失败
-            LogUtil.logd("hasmore = "+data.hasMore)
-            smartRefreshLayout.finishLoadMore(0,false, !data.hasMore)
+            baseQuickAdapter.loadMoreModule.loadMoreFail()
         }
     }
 }

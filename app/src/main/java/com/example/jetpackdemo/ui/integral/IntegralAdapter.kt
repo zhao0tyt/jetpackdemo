@@ -9,6 +9,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.bean.IntegralResponse
@@ -47,7 +48,8 @@ import com.example.jetpackdemo.data.bean.IntegralResponse
  * @Author:         hegaojian
  * @CreateDate:     2019/9/1 9:52
  */
-class IntegralAdapter(data: ArrayList<IntegralResponse>) : BaseQuickAdapter<IntegralResponse, BaseViewHolder>(R.layout.item_integral, data) {
+class IntegralAdapter(data: ArrayList<IntegralResponse>):
+    BaseQuickAdapter<IntegralResponse, BaseViewHolder>(R.layout.item_integral, data), LoadMoreModule {
 
     override fun convert(holder: BaseViewHolder, item: IntegralResponse) {
         //赋值

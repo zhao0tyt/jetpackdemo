@@ -1,18 +1,31 @@
 package com.example.jetpackdemo.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.jetpackdemo.R
+import com.example.jetpackdemo.ext.initClose
 import com.just.agentweb.AgentWeb
+import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_web.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class WebFragment: Fragment() {
     private lateinit var mAgentWeb: AgentWeb
     private val INTEGRAL_RULE_KEY = "integral_rule"
+    private val WANANDROID_KEY = "wanandroid"
+    //标题
+    var showTitle: String = ""
+    //文章的网络访问路径
+    var mUrl: String? = ""
+    //是否收藏
+    var isCollected = false
+    lateinit var mActivity: AppCompatActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,17 +37,36 @@ class WebFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 添加Menu
+        setHasOptionsMenu(true)
+        mActivity = context as AppCompatActivity
+
+        arguments?.run {
+            getString(INTEGRAL_RULE_KEY)?.let {
+                mUrl = it
+                showTitle = "积分规则"
+            }
+            getString(WANANDROID_KEY)?.let {
+                mUrl = it
+                showTitle = "玩Android网站"
+            }
+        }
 
         mAgentWeb = AgentWeb.with(this)
             .setAgentWebParent(webcontent, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()
             .createAgentWeb()
             .ready()
-            .go(getUrl())
-    }
+            .go(mUrl)
 
-    private fun getUrl(): String? {
-        return arguments?.getString(INTEGRAL_RULE_KEY)
+        toolbar.run {
+            //设置menu 关键代码
+            mActivity.setSupportActionBar(this)
+            initClose(showTitle) {
+
+            }
+        }
+
     }
 
     override fun onPause() {
@@ -52,4 +84,48 @@ class WebFragment: Fragment() {
         super.onDestroy()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.web_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        //如果收藏了，右上角的图标相对应改变
+        context?.let {
+            if (isCollected) {
+                menu.findItem(R.id.web_collect).icon =
+                    ContextCompat.getDrawable(it, R.drawable.ic_collected)
+            } else {
+                menu.findItem(R.id.web_collect).icon =
+                    ContextCompat.getDrawable(it, R.drawable.ic_collect)
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.web_share -> {
+                LogUtil.logd("分享")
+                //分享
+                startActivity(Intent.createChooser(Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, "{${showTitle}}:${mUrl}")
+                    type = "text/plain"
+                }, "分享到"))
+            }
+            R.id.web_refresh -> {
+                //刷新网页
+                mAgentWeb?.urlLoader?.reload()
+            }
+            R.id.web_liulanqi -> {
+                //用浏览器打开
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(mUrl)))
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 }

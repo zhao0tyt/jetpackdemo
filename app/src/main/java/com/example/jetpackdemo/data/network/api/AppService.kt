@@ -50,5 +50,14 @@ interface AppService {
      */
     @GET("wxarticle/chapters/json")
     fun getOfficialAccountTitle(): Call<ApiResponse<ArrayList<ClassifyResponse>>>
+
+    /**
+     * 获取公众号数据
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    fun getPublicData(
+        @Path("page") pageNo: Int,
+        @Path("id") id: Int
+    ):Call<ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>>
 }
 

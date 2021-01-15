@@ -13,5 +13,5 @@ interface OfficialAccountTitleDao {
     suspend fun insert(data: ListClassifyResponse)
 
     @Query("SELECT * FROM list_data where dataType = :dataType")
-    suspend fun getTitle(dataType: String?): ListClassifyResponse
+    suspend fun getData(dataType: String?): ListClassifyResponse
 }

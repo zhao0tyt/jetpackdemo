@@ -19,7 +19,8 @@ import com.zzq.common.ext.util.notNull
 import com.zzq.common.util.LogUtil
 
 class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>(){
-
+    private val WANANDROID_KEY = "wanandroid"
+    private val WANANDROID_URL = "https://www.wanandroid.com/"
     private var integralResponse: IntegralResponse? = null
 
     private val meViewModel: MeViewModel by viewModels {
@@ -95,6 +96,13 @@ class MeFragment : BaseFragment<BaseViewModel, FragmentMeBinding>(){
                     }
                 )
             }
+        }
+
+        /** 玩Android开源网站 */
+        fun about() {
+            nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
+                putString(WANANDROID_KEY, WANANDROID_URL)
+            })
         }
     }
 
