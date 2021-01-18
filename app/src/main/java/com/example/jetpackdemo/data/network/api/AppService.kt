@@ -59,5 +59,17 @@ interface AppService {
         @Path("page") pageNo: Int,
         @Path("id") id: Int
     ):Call<ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>>
+
+    /**
+     * 收藏文章
+     */
+    @POST("lg/collect/{id}/json")
+    fun collect(@Path("id") id: Int): Call<ApiResponse<Any?>>
+
+    /**
+     * 取消收藏文章
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    fun uncollect(@Path("id") id: Int): Call<ApiResponse<Any?>>
 }
 

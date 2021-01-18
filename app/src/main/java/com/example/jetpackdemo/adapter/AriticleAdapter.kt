@@ -1,6 +1,7 @@
 package com.example.jetpackdemo.adapter
 
 import android.text.TextUtils
+import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseDelegateMultiAdapter
@@ -9,7 +10,7 @@ import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.bean.AriticleResponse
-import com.example.jetpackdemo.widget.CollectView
+import com.sackcentury.shinebuttonlib.ShineButton
 
 class AriticleAdapter(data: MutableList<AriticleResponse>?) :
     BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data), LoadMoreModule {
@@ -17,8 +18,8 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
     private val Project = 2//项目类型 本来打算不区分文章和项目布局用统一布局的，但是布局完以后发现差异化蛮大的，所以还是分开吧
     private var showTag = false//是否展示标签 tag 一般主页才用的到
 
-    private var collectAction: (item: AriticleResponse, v: CollectView, position: Int) -> Unit =
-        { _: AriticleResponse, _: CollectView, _: Int -> }
+    private var collectAction: (item: AriticleResponse, v: ShineButton, position: Int) -> Unit =
+        { _: AriticleResponse, _: View, _: Int -> }
 
     constructor(data: MutableList<AriticleResponse>?, showTag: Boolean) : this(data) {
         this.showTag = showTag
@@ -51,7 +52,7 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
                     helper.setText(R.id.item_home_content, title)
                     helper.setText(R.id.item_home_type2, "$superChapterName·$chapterName")
                     helper.setText(R.id.item_home_date, niceDate)
-                    helper.getView<CollectView>(R.id.item_home_collect).isChecked = collect
+                    helper.getView<ShineButton>(R.id.item_home_collect).isChecked = collect
                     if (showTag) {
                         //展示标签
                         helper.setGone(R.id.item_home_new, !fresh)
@@ -69,12 +70,10 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
                         helper.setGone(R.id.item_home_new, true)
                     }
                 }
-                helper.getView<CollectView>(R.id.item_home_collect)
-                    .setOnCollectViewClickListener(object : CollectView.OnCollectViewClickListener {
-                        override fun onClick(v: CollectView) {
-                            collectAction.invoke(item, v, helper.adapterPosition)
-                        }
-                    })
+                helper.getView<ShineButton>(R.id.item_home_collect)
+                    .setOnClickListener { it
+                        collectAction.invoke(item, it as ShineButton, helper.adapterPosition)
+                    }
             }
             Project -> {
                 //项目布局的赋值
@@ -106,22 +105,20 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
                         helper.setGone(R.id.item_project_type1, true)
                         helper.setGone(R.id.item_project_new, true)
                     }
-                    helper.getView<CollectView>(R.id.item_project_collect).isChecked = collect
+                    helper.getView<ShineButton>(R.id.item_project_collect).isChecked = collect
                     Glide.with(context).load(envelopePic)
                         .transition(DrawableTransitionOptions.withCrossFade(500))
                         .into(helper.getView(R.id.item_project_imageview))
                 }
-                helper.getView<CollectView>(R.id.item_project_collect)
-                    .setOnCollectViewClickListener(object : CollectView.OnCollectViewClickListener {
-                        override fun onClick(v: CollectView) {
-                            collectAction.invoke(item, v, helper.adapterPosition)
-                        }
-                    })
+                helper.getView<ShineButton>(R.id.item_project_collect)
+                    .setOnClickListener {
+                        collectAction.invoke(item, it as ShineButton, helper.adapterPosition)
+                    }
             }
         }
     }
 
-    fun setCollectClick(inputCollectAction: (item: AriticleResponse, v: CollectView, position: Int) -> Unit) {
+    fun setCollectClick(inputCollectAction: (item: AriticleResponse, v: ShineButton, position: Int) -> Unit) {
         this.collectAction = inputCollectAction
     }
 

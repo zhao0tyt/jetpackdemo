@@ -7,7 +7,7 @@ import com.example.jetpackdemo.data.repository.AppRepository
 import com.zzq.common.base.viewmodel.BaseViewModel
 import com.zzq.common.ext.request
 
-class IntegralHistoryViewModel(private val repository: AppRepository) : BaseViewModel()  {
+class IntegralHistoryViewModel(private val repository: AppRepository) : BaseViewModel() {
     private var pageNo = 1
 
     var integralHistoryDataState = MutableLiveData<ListDataUiState<IntegralHistoryResponse>>()

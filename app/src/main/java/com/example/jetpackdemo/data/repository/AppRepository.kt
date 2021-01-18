@@ -98,6 +98,19 @@ class AppRepository(appDatabase: AppDatabase, private val network: Network) {
     }
 
 
+    //收藏
+    suspend fun collect(id: Int) = withContext(Dispatchers.IO) {
+        LogUtil.logd("collect")
+        var response = network.collect(id)
+        response
+    }
+
+    //取消收藏
+    suspend fun unCollect(id: Int) = withContext(Dispatchers.IO) {
+        LogUtil.logd("unCollect")
+        var response = network.unCollect(id)
+        response
+    }
 
 
 
