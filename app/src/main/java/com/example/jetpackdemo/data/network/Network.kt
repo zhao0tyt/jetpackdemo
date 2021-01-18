@@ -29,6 +29,10 @@ class Network {
 
     suspend fun getPublicData(page: Int, id: Int) = appService.getPublicData(page, id).await()
 
+    suspend fun collect(id: Int) = appService.collect(id).await()
+
+    suspend fun unCollect(id: Int) = appService.uncollect(id).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

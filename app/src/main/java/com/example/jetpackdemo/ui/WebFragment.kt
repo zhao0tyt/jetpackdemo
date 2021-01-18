@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.jetpackdemo.R
+import com.example.jetpackdemo.data.bean.AriticleResponse
 import com.example.jetpackdemo.ext.initClose
 import com.just.agentweb.AgentWeb
 import com.zzq.common.util.LogUtil
@@ -50,6 +51,11 @@ class WebFragment: Fragment() {
                 mUrl = it
                 showTitle = "玩Android网站"
             }
+
+            getParcelable<AriticleResponse>("ariticleData")?.let{
+                mUrl = it.link
+            }
+
         }
 
         mAgentWeb = AgentWeb.with(this)
