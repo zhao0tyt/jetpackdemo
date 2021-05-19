@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.data.network.logginginterceptor
+package com.zzq.common.network.interceptor
 
 import android.util.Log
 import okhttp3.FormBody
@@ -29,7 +29,7 @@ class Logger {
 
         private fun String.isLineEmpty() = isEmpty() || N == this || T == this || this.trim { it <= ' ' }.isEmpty()
 
-        private fun getDoubleSeparator(hideVerticalLine: Boolean = false) = if (hideVerticalLine) "$LINE_SEPARATOR  $LINE_SEPARATOR" else "$LINE_SEPARATOR║ $LINE_SEPARATOR"
+        private fun getDoubleSeparator(hideVerticalLine: Boolean = false) = if (hideVerticalLine) "$LINE_SEPARATOR  $LINE_SEPARATOR" else "${LINE_SEPARATOR}║ $LINE_SEPARATOR"
 
         /**
          * 支持超长日志的打印
@@ -55,8 +55,8 @@ class Logger {
         private fun log(tag: String, msg: String, logLevel: LoggingInterceptor.LogLevel = LoggingInterceptor.LogLevel.INFO) {
             when (logLevel) {
                 LoggingInterceptor.LogLevel.ERROR -> Log.e(tag, msg)
-                LoggingInterceptor.LogLevel.WARN  -> Log.w(tag, msg)
-                LoggingInterceptor.LogLevel.INFO  -> Log.i(tag, msg)
+                LoggingInterceptor.LogLevel.WARN -> Log.w(tag, msg)
+                LoggingInterceptor.LogLevel.INFO -> Log.i(tag, msg)
                 LoggingInterceptor.LogLevel.DEBUG -> Log.d(tag, msg)
             }
         }
@@ -92,7 +92,7 @@ class Logger {
                     val requestBodyString = if (hideVerticalLine) {
                         " $LINE_SEPARATOR Body:$LINE_SEPARATOR"
                     } else {
-                        "║ $LINE_SEPARATOR║ Body:$LINE_SEPARATOR"
+                        "║ ${LINE_SEPARATOR}║ Body:$LINE_SEPARATOR"
                     }
 
                     val bodyString = bodyToString(request).split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -124,7 +124,7 @@ class Logger {
                 val requestBodyString = if (hideVerticalLine) {
                     " $LINE_SEPARATOR Body:$LINE_SEPARATOR"
                 } else {
-                    "║ $LINE_SEPARATOR║ Body:$LINE_SEPARATOR"
+                    "║ ${LINE_SEPARATOR}║ Body:$LINE_SEPARATOR"
                 }
 
                 val binaryBodyString = binaryBodyToString(request).split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
@@ -153,7 +153,7 @@ class Logger {
                 val responseBody = if (hideVerticalLine) {
                     " $LINE_SEPARATOR Body:$LINE_SEPARATOR"
                 } else {
-                    "║ $LINE_SEPARATOR║ Body:$LINE_SEPARATOR"
+                    "║ ${LINE_SEPARATOR}║ Body:$LINE_SEPARATOR"
                 }
 
                 val bodyString = getJsonString(bodyString).split(LINE_SEPARATOR.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

@@ -1,20 +1,19 @@
-package com.example.jetpackdemo.data.network
+package com.zzq.common.network
 
-import com.example.jetpackdemo.App
-import com.example.jetpackdemo.data.network.logginginterceptor.LoggingInterceptor
+import android.content.Context
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.zzq.common.network.interceptor.LoggingInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-object ServiceCreator {
+class ServiceCreator(context: Context, baseUrl:String) {
 
-    private const val BASE_URL = "https://www.wanandroid.com"
     private val cookieJar: PersistentCookieJar by lazy {
-        PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(App.context))
+        PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
     }
 
     val loggingInterceptor = LoggingInterceptor.Builder()
@@ -27,11 +26,12 @@ object ServiceCreator {
         .build()
 
     private val httpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).cookieJar(
-        cookieJar).build()
+        cookieJar
+    ).build()
 
 
     private val builder = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(baseUrl)
         .client(httpClient)
         .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
@@ -40,6 +40,4 @@ object ServiceCreator {
     private val retrofit = builder.build()
 
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
-
-
 }

@@ -5,12 +5,15 @@ import com.example.jetpackdemo.data.dao.AppDatabase
 import com.example.jetpackdemo.data.network.Network
 import com.example.jetpackdemo.data.repository.AppRepository
 import com.example.jetpackdemo.ui.collect.CollectModelFactory
+import com.example.jetpackdemo.ui.home.HomeViewModelFactory
 import com.example.jetpackdemo.ui.integral.IntegralHistoryModelFactory
 import com.example.jetpackdemo.ui.integral.IntegralModelFactory
 import com.example.jetpackdemo.ui.login.viewmodel.LoginModelFactory
 import com.example.jetpackdemo.ui.login.viewmodel.RegisterModelFactory
 import com.example.jetpackdemo.ui.me.MeModelFactory
 import com.example.jetpackdemo.ui.officialaccount.OfficialAccountModelFactory
+import com.example.jetpackdemo.ui.project.ProjectViewModelFactory
+import com.example.jetpackdemo.ui.square.SquareModelFactory
 
 object InjectorUtil {
     private fun getAppRepository(context: Context) = AppRepository.getInstance(AppDatabase.getDatabase(context), Network.getInstance())
@@ -28,4 +31,10 @@ object InjectorUtil {
     fun getOfficialAccountViewModelFactory(context: Context) = OfficialAccountModelFactory(getAppRepository(context))
 
     fun getCollectViewModelFactory(context: Context) = CollectModelFactory(getAppRepository(context))
+
+    fun getSquareViewModelFactory(context: Context) = SquareModelFactory(getAppRepository(context))
+
+    fun getProjectViewModelFactory(context: Context) = ProjectViewModelFactory(getAppRepository(context))
+
+    fun getHomeViewModelFactory(context: Context) = HomeViewModelFactory(getAppRepository(context))
 }

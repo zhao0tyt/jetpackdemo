@@ -5,13 +5,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.bean.AriticleResponse
+import com.example.jetpackdemo.data.bean.BannerResponse
+import com.example.jetpackdemo.ext.hideSoftKeyboard
 import com.example.jetpackdemo.ext.initClose
 import com.just.agentweb.AgentWeb
+import com.zzq.common.ext.nav
 import com.zzq.common.util.LogUtil
 import kotlinx.android.synthetic.main.fragment_web.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -55,7 +59,9 @@ class WebFragment: Fragment() {
             getParcelable<AriticleResponse>("ariticleData")?.let{
                 mUrl = it.link
             }
-
+            getParcelable<BannerResponse>("bannerdata")?.let{
+                mUrl = it.url
+            }
         }
 
         mAgentWeb = AgentWeb.with(this)
@@ -69,10 +75,29 @@ class WebFragment: Fragment() {
             //设置menu 关键代码
             mActivity.setSupportActionBar(this)
             initClose(showTitle) {
-
+                hideSoftKeyboard(activity)
+                mAgentWeb?.let { web ->
+                    if (web.webCreator.webView.canGoBack()) {
+                        web.webCreator.webView.goBack()
+                    } else {
+                        nav().navigateUp()
+                    }
+                }
             }
         }
-
+        //back按键
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    mAgentWeb?.let { web ->
+                        if (web.webCreator.webView.canGoBack()) {
+                            web.webCreator.webView.goBack()
+                        } else {
+                            nav().navigateUp()
+                        }
+                    }
+                }
+            })
     }
 
     override fun onPause() {
@@ -134,4 +159,6 @@ class WebFragment: Fragment() {
 
         return super.onOptionsItemSelected(item)
     }
+
+
 }

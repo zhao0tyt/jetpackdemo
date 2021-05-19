@@ -1,4 +1,4 @@
-package com.example.jetpackdemo.data.network.logginginterceptor
+package com.zzq.common.network.interceptor
 
 import okhttp3.Headers
 import okhttp3.Interceptor
@@ -8,7 +8,7 @@ import java.io.IOException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
-class LoggingInterceptor private constructor(private val builder: LoggingInterceptor.Builder) : Interceptor {
+class LoggingInterceptor private constructor(private val builder: Builder) : Interceptor {
 
     private val isDebug: Boolean
     private val charset: Charset
@@ -90,7 +90,15 @@ class LoggingInterceptor private constructor(private val builder: LoggingInterce
                     val buffer = source.buffer()
 
                     val bodyString = Logger.getJsonString(buffer.clone().readString(charset))
-                    Logger.printJsonResponse(builder, chainMs, isSuccessful, code, header, bodyString, requestUrl)
+                    Logger.printJsonResponse(
+                        builder,
+                        chainMs,
+                        isSuccessful,
+                        code,
+                        header,
+                        bodyString,
+                        requestUrl
+                    )
                 }
             } else {
                 Logger.printFileResponse(builder, chainMs, isSuccessful, code, header, requestUrl)

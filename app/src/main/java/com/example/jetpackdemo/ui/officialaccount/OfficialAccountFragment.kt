@@ -73,8 +73,7 @@ class OfficialAccountFragment : BaseFragment<BaseViewModel, FragmentViewpagerBin
                 loadsir.showSuccess()
             }, {
                 //请求项目标题失败
-                loadsir.showCallback(ErrorCallback::class.java)
-                loadsir.setErrorText(it.errorMsg)
+                loadsir.showError(it.errorMsg)
             })
         })
     }
