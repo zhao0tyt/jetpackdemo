@@ -50,8 +50,6 @@ class OfficialAccountChildFragment: BaseFragment<BaseViewModel, IncludeListBindi
             cid = it.getInt("cid")
         }
 
-
-
         //初始化 SwipeRefreshLayout
         swipeRefreshLayout.init {
             //触发刷新监听时请求数据

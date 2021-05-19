@@ -19,12 +19,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackdemo.R
 import com.example.jetpackdemo.data.bean.state.ListDataUiState
-import com.example.jetpackdemo.ui.home.HomeFragment
-import com.example.jetpackdemo.ui.me.MeFragment
-import com.example.jetpackdemo.ui.officialaccount.OfficialAccountChildFragment
-import com.example.jetpackdemo.ui.officialaccount.OfficialAccountFragment
-import com.example.jetpackdemo.ui.project.ProjectFragment
-import com.example.jetpackdemo.ui.square.SquareFragment
 import com.example.jetpackdemo.widget.EmptyCallback
 import com.example.jetpackdemo.widget.ErrorCallback
 import com.example.jetpackdemo.widget.LoadingCallback
@@ -40,39 +34,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView
-
-fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
-    //是否可滑动
-    this.isUserInputEnabled = false
-    this.offscreenPageLimit = 5
-    //设置适配器
-    adapter = object : FragmentStateAdapter(fragment) {
-        override fun createFragment(position: Int): Fragment {
-            when (position) {
-                0 -> {
-                    return HomeFragment()
-                }
-                1 -> {
-                    return ProjectFragment()
-                }
-                2 -> {
-                    return SquareFragment()
-                }
-                3 -> {
-                    return OfficialAccountFragment()
-                }
-                4 -> {
-                    return MeFragment()
-                }
-                else -> {
-                    return HomeFragment()
-                }
-            }
-        }
-        override fun getItemCount() = 5
-    }
-    return this
-}
 
 fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): BottomNavigationViewEx {
     enableAnimation(true)

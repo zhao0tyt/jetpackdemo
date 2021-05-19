@@ -1,4 +1,4 @@
 include ':shinebuttonlib'
-include ':common-components'
+include ':MvvmArch'
 include ':app'
 rootProject.name = "JetPackDemo"

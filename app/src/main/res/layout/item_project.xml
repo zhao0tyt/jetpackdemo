@@ -151,14 +151,19 @@
                 android:textColor="@color/colorBlack666"
                 android:textSize="13dp"
                 tools:text="分类·项目" />
-
-            <me.hgj.jetpackmvvm.demo.app.weight.customview.CollectView
+            <com.sackcentury.shinebuttonlib.ShineButton
                 android:id="@+id/item_project_collect"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="#f26d7d"
+                app:siShape="@raw/heart"
+                android:elevation="10dp" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
